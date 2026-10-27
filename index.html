@@ -13,6 +13,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&display=swap" rel="stylesheet">
 <title>Skin Manager</title>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
   --bg:#0b0f19;--s1:#121826;--s2:#1a2235;--s3:#242f47;
@@ -312,6 +314,23 @@ select.form-input{appearance:none;-webkit-appearance:none;}
    ============================================================ */
 
 const STORAGE_KEY = "skinManagerState.v1";
+
+/* ========== FIREBASE CONFIG ========== */
+const firebaseConfig = {
+  apiKey: "AIzaSyCaqITH1tIc_mVALX_q_qCc164vThGa_Yc",
+  authDomain: "project-170845.firebaseapp.com",
+  databaseURL: "https://project-170845-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "project-170845",
+  storageBucket: "project-170845.firebasestorage.app",
+  messagingSenderId: "940472175586",
+  appId: "1:940472175586:web:8b51c4d970cfd3286087bb",
+  measurementId: "G-EEFER22KE8"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const dbCloud = firebase.firestore();
 const AI_PROMPT = `You are an anime identification expert. Analyze this image carefully.
 Return ONLY a valid JSON object (no markdown, no code fences, no explanation) with EXACTLY these fields:
 {"id":"lowercase-slug","name":"Character Full Name","anime":"Anime - Form/Arc","icon":"emoji","preview":"#RRGGBB","desc":"short Indonesian max 30 chars"}`;
@@ -355,7 +374,8 @@ let state = {
   previewIndex: 0,
   filter: "all",
   query: "",
-  view: "grid"
+  view: "grid",
+  active: null
 };
 let editForm = { id:"", name:"", anime:"", icon:"", imageBlob:null, imageUrl:null, preview:"#4f46e5", desc:"", _origSize:0, _newSize:0 };
 
@@ -1028,7 +1048,13 @@ function renderSettings(){
     <div class="divider"></div>
     <button class="btn btn-primary" data-action="save-settings">Simpan Pengaturan</button>
     <div class="divider"></div>
-    <div class="settings-section"><div class="settings-title"><span class="dot"></span>Data</div>
+    <div class="settings-section">
+      <div class="settings-title"><span class="dot"></span>Cloud Sync (Firebase)</div>
+      <button class="btn btn-primary" data-action="sync-cloud-up" style="margin-bottom:10px;">${ic("upload",18)} Upload Semua ke Cloud</button>
+      <button class="btn btn-secondary" data-action="sync-cloud-down">${ic("download",18)} Tarik Data dari Cloud</button>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;">Kirim data skin ke database Firebase atau ambil data terbaru.</div>
+    </div>
+    <div class="settings-section"><div class="settings-title"><span class="dot"></span>Data Lokal (Manual)</div>
       <button class="btn btn-secondary" data-action="export-json" style="margin-bottom:10px;">${ic("upload",18)} Export ZIP</button>
       <button class="btn btn-secondary" data-action="import-json">${ic("download",18)} Import JSON / ZIP</button></div>
     <div class="ai-hint">${ic("lock",18)}<span>API key disimpan lokal di perangkat ini.</span></div>
@@ -1186,6 +1212,7 @@ async function handleAction(action, el){
       if (!ok) return;
       try { await dbDelete(id); } catch(e) { console.warn(e); }
       cacheDelete(id);
+      dbCloud.collection("skins").doc(id).delete().catch(e => console.warn(e));
       state.skins = state.skins.filter(s => s.id !== id);
       if (state.active === id) state.active = null;
       if (state.previewIndex >= state.skins.length) state.previewIndex = Math.max(0, state.skins.length - 1);
@@ -1199,6 +1226,7 @@ async function handleAction(action, el){
       if (!ok) return;
       try { await dbDelete(skin.id); } catch(e) { console.warn(e); }
       cacheDelete(skin.id);
+      dbCloud.collection("skins").doc(skin.id).delete().catch(e => console.warn(e));
       state.skins = state.skins.filter(s => s.id !== state.editingId);
       if (state.active === state.editingId) state.active = null;
       if (state.previewIndex >= state.skins.length) state.previewIndex = Math.max(0, state.skins.length - 1);
@@ -1428,6 +1456,18 @@ case "auto-color": {
       saveState(); toast("Pengaturan disimpan", "success");
       break;
     }
+    case "sync-cloud-up": {
+      const btn = el; const orig = btn.innerHTML;
+      btn.disabled = true; btn.innerHTML = `<span class="spinner"></span> Uploading...`;
+      try { await syncCloudUp(); } finally { btn.disabled = false; btn.innerHTML = orig; }
+      break;
+    }
+    case "sync-cloud-down": {
+      const btn = el; const orig = btn.innerHTML;
+      btn.disabled = true; btn.innerHTML = `<span class="spinner"></span> Menarik...`;
+      try { await syncCloudDown(); } finally { btn.disabled = false; btn.innerHTML = orig; }
+      break;
+    }
     case "export-json": {
       try { await ensureJSZip(); } catch(e) { toast("Gagal muat JSZip", "error"); return; }
       toast("Menyiapkan ZIP...", "info");
@@ -1536,12 +1576,120 @@ case "auto-color": {
   }
 }
 
+async function syncCloudUp() {
+  if (!state.skins.length) return toast("Tidak ada skin untuk di-upload", "error");
+  toast("Mulai upload ke Firebase...", "info");
+  let success = 0;
+  
+  for (const s of state.skins) {
+    try {
+      let base64Img = null;
+      if (imageCache.has(s.id)) {
+        const blob = await (await fetch(imageCache.get(s.id))).blob();
+        base64Img = await blobToDataUrl(blob);
+      }
+      
+      const skinData = {
+        id: s.id,
+        name: s.name,
+        anime: s.anime || "-",
+        icon: s.icon || "🎨",
+        preview: s.preview || "#4f46e5",
+        desc: s.desc || "",
+        fav: s.fav || false,
+        imageBase64: base64Img,
+        updatedAt: Date.now()
+      };
+      
+      await dbCloud.collection("skins").doc(s.id).set(skinData);
+      success++;
+    } catch(e) {
+      console.error("Gagal upload skin", s.id, e);
+    }
+  }
+  toast(`✓ ${success} skin berhasil di-upload ke Cloud`, "success");
+}
+
+async function syncCloudDown() {
+  if (!confirm("Tarik data dari Cloud? Data lokal dengan ID yang sama akan ditimpa.")) return;
+  toast("Menarik data dari Firebase...", "info");
+  
+  try {
+    const snapshot = await dbCloud.collection("skins").get();
+    if (snapshot.empty) return toast("Tidak ada data di Cloud", "info");
+    
+    let count = 0;
+    for (const doc of snapshot.docs) {
+      const data = doc.data();
+      const s = {
+        id: data.id,
+        name: data.name,
+        anime: data.anime,
+        icon: data.icon,
+        preview: data.preview,
+        desc: data.desc,
+        fav: data.fav || false
+      };
+      
+      if (data.imageBase64) {
+        try {
+          const res = await fetch(data.imageBase64);
+          if (res.ok) {
+            const blob = await res.blob();
+            await dbSave(s.id, blob);
+            cacheSet(s.id, blob);
+          }
+        } catch(e) { console.warn("Gagal download gambar", s.id); }
+      }
+      
+      const existingIdx = state.skins.findIndex(x => x.id === s.id);
+      if (existingIdx >= 0) state.skins[existingIdx] = { ...state.skins[existingIdx], ...s };
+      else state.skins.push(s);
+      count++;
+    }
+    
+    saveState();
+    render();
+    toast(`✓ ${count} skin berhasil ditarik dari Cloud`, "success");
+  } catch(e) {
+    console.error(e);
+    toast("Gagal menarik data: " + e.message, "error");
+  }
+}
+
 function navigate(route, id){
   state.route = route;
   if (id !== undefined) state.editingId = id;
   render();
   window.scrollTo({ top: 0, behavior: "instant" });
+  if (window.history.state?.route !== route) {
+    history.pushState({ route: route }, "");
+  }
 }
+
+window.addEventListener("popstate", (e) => {
+  // 1. Cek jika ada modal/popup yang sedang terbuka, tutup popupnya
+  const ovs = document.querySelectorAll(".modal-overlay");
+  if (ovs.length > 0) {
+    const topOv = ovs[ovs.length - 1];
+    const cancelBtn = topOv.querySelector('[data-m="cancel"]') ||
+                      topOv.querySelector('[data-choice="cancel"]') ||
+                      topOv.querySelector('#pv-cancel');
+    if (cancelBtn) cancelBtn.click();
+    else topOv.remove();
+    // Pertahankan history agar tidak keluar aplikasi saat back ditekan lagi
+    history.pushState({ route: state.route }, "");
+    return;
+  }
+
+  // 2. Jika tidak ada popup, kembalikan ke rute sebelumnya (Beranda)
+  const newRoute = e.state?.route || "home";
+  if (newRoute !== state.route) {
+    state.route = newRoute;
+    render();
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+});
 
 /* ========== EVENT DELEGATION ========== */
 document.addEventListener('contextmenu', e => {
@@ -1564,6 +1712,7 @@ document.getElementById("app").addEventListener("click", e => {
 /* ========== BOOT ========== */
 async function boot(){
   applyTheme(currentTheme);
+  history.replaceState({ route: "home" }, "");
   const isFirstRun = !localStorage.getItem(STORAGE_KEY);
   loadState();
   if (isFirstRun) saveState();
