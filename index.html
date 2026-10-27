@@ -289,6 +289,16 @@ select.form-input{appearance:none;-webkit-appearance:none;}
 .toast.show{transform:translate(-50%,0);}
 .toast-success{border-color:rgba(52,211,153,.5);}
 .toast-error{border-color:rgba(248,113,113,.55);}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.anim-left { animation: slideInLeft 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.anim-right { animation: slideInRight 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
 .spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.25);border-top-color:currentColor;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
 @keyframes spin{to{transform:rotate(360deg);}}
 </style>
@@ -754,7 +764,7 @@ function refreshList(){
   if (cnt) cnt.textContent = getFiltered().length;
   bindImages();
 }
-function patchHero(){
+function patchHero(dir = 0){
   const pv = state.skins[state.previewIndex];
   const card = document.querySelector(".preview-card");
   if (!pv || !card) return;
@@ -776,6 +786,15 @@ function patchHero(){
   const favBtn = document.querySelector('.hero-meta [data-action="fav"]');
   if (favBtn){ favBtn.dataset.id = pv.id; favBtn.style.color = pv.fav ? "#fbbf24" : ""; }
   document.querySelectorAll(".preview-dot").forEach((d, i) => d.classList.toggle("active", i === state.previewIndex));
+
+  if (dir !== 0) {
+    [card, document.querySelector(".hero-meta")].forEach(el => {
+      if (!el) return;
+      el.classList.remove("anim-left", "anim-right");
+      void el.offsetWidth; // trigger reflow untuk restart animasi
+      el.classList.add(dir === 1 ? "anim-left" : "anim-right");
+    });
+  }
 }
 function dock(active){
   return `<nav class="dock">
@@ -1077,8 +1096,9 @@ document.addEventListener("touchend", e => {
   const dy = e.changedTouches[0].clientY - swipe.y;
   if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && state.skins.length){
     suppressClick = Date.now() + 400;
-    state.previewIndex = (state.previewIndex + (dx < 0 ? 1 : -1) + state.skins.length) % state.skins.length;
-    patchHero();
+    const dir = dx < 0 ? 1 : -1;
+    state.previewIndex = (state.previewIndex + dir + state.skins.length) % state.skins.length;
+    patchHero(dir);
   }
 }, { passive: true });
 
@@ -1151,7 +1171,13 @@ async function handleAction(action, el){
     }
     case "go-settings": navigate("settings"); break;
 
-    case "set-preview": state.previewIndex = parseInt(el.dataset.index, 10) || 0; patchHero(); break;
+    case "set-preview": {
+  const newIdx = parseInt(el.dataset.index, 10) || 0;
+  const dir = newIdx > state.previewIndex ? 1 : -1;
+  state.previewIndex = newIdx;
+  patchHero(dir);
+  break;
+}
     case "delete-skin": {
       const id = el.dataset.id;
       const skin = state.skins.find(s => s.id === id);
