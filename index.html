@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0b0f19">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Skin Manager">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&display=swap" rel="stylesheet">
+<title>Skin Manager</title>
+<style>
+:root{
+  --bg:#0b0f19;--s1:#121826;--s2:#1a2235;--s3:#242f47;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#f8fafc;--muted:#94a3b8;
+  --pri:#2dd4bf;--pri2:#38bdf8;--acc:#fb7185;
+  --danger:#f87171;--success:#34d399;--warning:#fbbf24;
+  --grad:linear-gradient(135deg,#2dd4bf,#38bdf8);
+  --font:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+[data-theme="light"]{
+  --bg:#f8fafc;--s1:#ffffff;--s2:#f1f5f9;--s3:#e2e8f0;
+  --line:rgba(0,0,0,.06);--line2:rgba(0,0,0,.12);
+  --text:#0f172a;--muted:#475569;
+  --pri:#0d9488;--pri2:#0284c7;--acc:#e11d48;
+  --danger:#dc2626;--success:#059669;--warning:#d97706;
+  --grad:linear-gradient(135deg,#0d9488,#0284c7);
+}
+[data-theme="purple"]{
+  --bg:#0f0a18;--s1:#1a102b;--s2:#25163d;--s3:#332052;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#f8fafc;--muted:#a78bfa;
+  --pri:#a78bfa;--pri2:#c084fc;--acc:#fb7185;
+  --danger:#f87171;--success:#34d399;--warning:#fbbf24;
+  --grad:linear-gradient(135deg,#a78bfa,#c084fc);
+}
+[data-theme="purple-light"]{
+  --bg:#faf5ff;--s1:#ffffff;--s2:#f3e8ff;--s3:#e9d5ff;
+  --line:rgba(0,0,0,.06);--line2:rgba(0,0,0,.12);
+  --text:#0f172a;--muted:#6b21a8;
+  --pri:#9333ea;--pri2:#7e22ce;--acc:#e11d48;
+  --danger:#dc2626;--success:#059669;--warning:#d97706;
+  --grad:linear-gradient(135deg,#9333ea,#7e22ce);
+}
+[data-theme="orange"]{
+  --bg:#171008;--s1:#261a0e;--s2:#362514;--s3:#4a331b;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#f8fafc;--muted:#f97316;
+  --pri:#f97316;--pri2:#f59e0b;--acc:#fb7185;
+  --danger:#f87171;--success:#34d399;--warning:#fbbf24;
+  --grad:linear-gradient(135deg,#f97316,#f59e0b);
+}
+[data-theme="orange-light"]{
+  --bg:#fffbeb;--s1:#ffffff;--s2:#fef3c7;--s3:#fde68a;
+  --line:rgba(0,0,0,.06);--line2:rgba(0,0,0,.12);
+  --text:#0f172a;--muted:#9a3412;
+  --pri:#ea580c;--pri2:#d97706;--acc:#e11d48;
+  --danger:#dc2626;--success:#059669;--warning:#d97706;
+  --grad:linear-gradient(135deg,#ea580c,#d97706);
+}
+[data-theme="rose"]{
+  --bg:#180a0d;--s1:#291014;--s2:#3b171d;--s3:#501f27;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#f8fafc;--muted:#fb7185;
+  --pri:#fb7185;--pri2:#f43f5e;--acc:#38bdf8;
+  --danger:#f87171;--success:#34d399;--warning:#fbbf24;
+  --grad:linear-gradient(135deg,#fb7185,#f43f5e);
+}
+[data-theme="rose-light"]{
+  --bg:#fff1f2;--s1:#ffffff;--s2:#ffe4e6;--s3:#fecdd3;
+  --line:rgba(0,0,0,.06);--line2:rgba(0,0,0,.12);
+  --text:#0f172a;--muted:#9f1239;
+  --pri:#e11d48;--pri2:#be123c;--acc:#0284c7;
+  --danger:#dc2626;--success:#059669;--warning:#d97706;
+  --grad:linear-gradient(135deg,#e11d48,#be123c);
+}
+[data-theme="blue"]{
+  --bg:#0a1024;--s1:#111b38;--s2:#19274d;--s3:#223362;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#f8fafc;--muted:#93c5fd;
+  --pri:#3b82f6;--pri2:#60a5fa;--acc:#fb7185;
+  --danger:#f87171;--success:#34d399;--warning:#fbbf24;
+  --grad:linear-gradient(135deg,#3b82f6,#60a5fa);
+}
+[data-theme="blue-light"]{
+  --bg:#eff6ff;--s1:#ffffff;--s2:#dbeafe;--s3:#bfdbfe;
+  --line:rgba(0,0,0,.06);--line2:rgba(0,0,0,.12);
+  --text:#0f172a;--muted:#1e40af;
+  --pri:#2563eb;--pri2:#1d4ed8;--acc:#e11d48;
+  --danger:#dc2626;--success:#059669;--warning:#d97706;
+  --grad:linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+[data-theme="green"]{
+  --bg:#06140c;--s1:#0e2416;--s2:#173621;--s3:#204b2f;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#f8fafc;--muted:#6ee7b7;
+  --pri:#10b981;--pri2:#34d399;--acc:#fb7185;
+  --danger:#f87171;--success:#34d399;--warning:#fbbf24;
+  --grad:linear-gradient(135deg,#10b981,#34d399);
+}
+[data-theme="green-light"]{
+  --bg:#ecfdf5;--s1:#ffffff;--s2:#d1fae5;--s3:#a7f3d0;
+  --line:rgba(0,0,0,.06);--line2:rgba(0,0,0,.12);
+  --text:#0f172a;--muted:#065f46;
+  --pri:#059669;--pri2:#047857;--acc:#e11d48;
+  --danger:#dc2626;--success:#059669;--warning:#d97706;
+  --grad:linear-gradient(135deg,#059669,#047857);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+*{-webkit-touch-callout:none;}
+body{-webkit-user-select:none;user-select:none;}
+input,textarea,select{-webkit-user-select:text;user-select:text;}
+html,body{overscroll-behavior-y:none;background:var(--bg);}
+body{
+  font-family:var(--font);color:var(--text);min-height:100vh;overflow-x:hidden;
+  padding-bottom:calc(110px + env(safe-area-inset-bottom,0px));
+  -webkit-font-smoothing:antialiased;background:var(--bg);
+}
+#app{max-width:720px;margin:0 auto;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,textarea,select{font-family:inherit;font-size:16px;}
+svg{display:block;flex-shrink:0;}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(900px 420px at 85% -80px,rgba(45,212,191,.14),transparent 60%),
+             radial-gradient(700px 380px at -10% 0,rgba(56,189,248,.10),transparent 60%);
+}
+.topbar{
+  position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:11px;}
+.brand-mark{width:38px;height:38px;border-radius:12px;background:var(--grad);color:#042f2a;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px -8px rgba(45,212,191,.7);}
+.topbar-title{font-size:17px;font-weight:800;letter-spacing:-.4px;}
+.topbar-sub{font-size:11px;color:var(--muted);font-weight:600;margin-top:1px;}
+.topbar-actions{display:flex;gap:8px;}
+.icon-btn{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:var(--s2);border:1px solid var(--line);color:var(--text);transition:transform .15s,background .15s;}
+.icon-btn:active{transform:scale(.92);background:var(--s3);}
+.icon-btn.danger{color:var(--danger);}
+.screen{padding:16px;}
+.screen.enter{animation:rise .3s ease;}
+@keyframes rise{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.hero{margin-bottom:20px;}
+.preview-card{position:relative;width:100%;aspect-ratio:800/420;border-radius:24px;overflow:hidden;cursor:pointer;box-shadow:0 12px 28px -14px rgba(0,0,0,.7),0 0 0 1px var(--line2);touch-action:pan-y;}
+.preview-bg{position:absolute;inset:0;}
+.preview-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;}
+.preview-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0) 40%,rgba(0,0,0,.75));}
+.pv-header{position:absolute;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;z-index:5;}
+.pv-title{font-size:10px;font-weight:800;letter-spacing:1.2px;color:rgba(255,255,255,.92);text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.pv-header-actions{display:flex;gap:6px;align-items:center;}
+.pv-pill-btn{padding:5px 10px;border-radius:20px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.28);color:#fff;font-size:10px;font-weight:700;}
+.pv-icon-btn{width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.28);color:#fff;display:flex;align-items:center;justify-content:center;}
+.pv-balance{position:absolute;top:46%;left:14px;right:14px;transform:translateY(-50%);z-index:5;}
+.pv-dots{display:flex;gap:4px;margin-bottom:12px;padding-left:6px;}
+.pv-dots span{width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 4px rgba(0,0,0,.3);}
+
+.pv-footer{position:absolute;bottom:12px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-end;z-index:5;border-top:1px solid rgba(255,255,255,.18);padding-top:9px;}
+.pv-footer-l,.pv-footer-r{display:flex;flex-direction:column;gap:2px;}
+.pv-footer-r{align-items:flex-end;}
+.pv-footer-label{font-size:9px;color:rgba(255,255,255,.72);font-weight:600;}
+.pv-footer-val{font-size:12.5px;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.pv-status{font-size:11px;font-weight:800;color:#fff;display:flex;align-items:center;gap:5px;}
+.pv-status::before{content:"";width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399;}
+
+.hero-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;}
+.hero-name{font-size:18px;font-weight:800;letter-spacing:-.4px;}
+.hero-sub{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px;}
+.preview-dots{display:flex;justify-content:center;gap:5px;margin-top:14px;flex-wrap:wrap;}
+.preview-dot{width:6px;height:6px;border-radius:3px;background:var(--s3);transition:all .25s;cursor:pointer;}
+.preview-dot.active{background:var(--pri);width:20px;}
+.toolbar{display:flex;gap:8px;margin-bottom:12px;}
+.search-wrap{position:relative;flex:1;}
+.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);}
+.search-input{width:100%;padding:13px 14px 13px 42px;border-radius:15px;background:var(--s1);border:1px solid var(--line);color:var(--text);font-size:14px;font-weight:500;}
+.search-input:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(45,212,191,.15);}
+.search-input::placeholder{color:var(--muted);opacity:.7;}
+.seg{display:flex;background:var(--s1);border:1px solid var(--line);border-radius:15px;padding:3px;}
+.seg button{width:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .15s;}
+.seg button.on{background:var(--s3);color:var(--pri);}
+.chips{display:flex;gap:8px;margin-bottom:16px;}
+.chip{padding:8px 14px;border-radius:30px;background:var(--s1);border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px;transition:all .15s;}
+.chip.on{background:rgba(45,212,191,.12);border-color:rgba(45,212,191,.45);color:var(--pri);}
+.chip b{font-weight:800;}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.section-title{font-size:15px;font-weight:800;letter-spacing:-.2px;}
+.section-count{font-size:11px;color:var(--muted);font-weight:700;background:var(--s1);padding:4px 10px;border-radius:20px;border:1px solid var(--line);}
+.skin-grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);}
+.skin-card{position:relative;aspect-ratio:16/11;border-radius:20px;overflow:hidden;cursor:pointer;background:linear-gradient(135deg,var(--c),#000);box-shadow:0 4px 14px -6px rgba(0,0,0,.55),0 0 0 1px var(--line2);transition:transform .15s;}
+.skin-card:active{transform:scale(.97);}
+.sc-media{position:absolute;inset:0;}
+.sc-media img{width:100%;height:100%;object-fit:cover;display:block;}
+.sc-emoji{position:absolute;right:14px;top:10px;font-size:44px;opacity:.35;}
+.sc-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,0) 35%,rgba(0,0,0,.85));}
+.sc-body{position:absolute;left:12px;right:12px;bottom:11px;display:flex;align-items:center;gap:9px;}
+.sc-icon{width:32px;height:32px;border-radius:10px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.sc-txt{min-width:0;}
+.sc-name{font-size:13px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.sc-id{font-size:10.5px;color:rgba(255,255,255,.75);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sc-btn,.sc-tools button{width:30px;height:30px;border-radius:10px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;color:#fff;transition:all .15s;}
+.sc-tools button.sc-btn{width:30px;height:30px;}
+.sc-btn.on{color:#fbbf24;background:rgba(251,191,36,.3);border-color:rgba(251,191,36,.6);}
+.sc-btn.on svg{fill:#fbbf24;}
+.sc-tools{position:absolute;top:9px;right:9px;display:flex;gap:6px;}
+.sc-tools button:active{transform:scale(.88);}
+.sc-tools .del:active{background:rgba(248,113,113,.7);}
+.skin-grid.list{grid-template-columns:1fr;gap:9px;}
+.skin-grid.list .skin-card{aspect-ratio:auto;height:68px;border-radius:16px;}
+.skin-grid.list .sc-body{left:74px;right:110px;bottom:auto;top:50%;transform:translateY(-50%);}
+.skin-grid.list .sc-icon{display:none;}
+.skin-grid.list .sc-name{font-size:14px;}
+.skin-grid.list .sc-media{inset:0 auto 0 0;width:66px;margin:6px;height:56px;border-radius:11px;overflow:hidden;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.2);}
+.skin-grid.list .sc-emoji{position:static;display:flex;height:100%;align-items:center;justify-content:center;opacity:1;font-size:26px;}
+.skin-grid.list .sc-shade{background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.35));}
+.skin-grid.list .sc-tools{top:50%;transform:translateY(-50%);right:9px;}
+.skin-grid.list .sc-tools button{width:32px;height:32px;}
+.empty-state{grid-column:1/-1;text-align:center;padding:44px 20px;color:var(--muted);}
+.empty-icon{width:56px;height:56px;border-radius:18px;background:var(--s2);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:var(--pri);}
+.empty-text{font-size:13px;line-height:1.6;font-weight:500;}
+.dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:90;width:min(360px,calc(100% - 32px));height:66px;border-radius:24px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;  background:var(--s2);border:1px solid var(--line2);box-shadow:0 20px 40px -12px rgba(0,0,0,.8);}
+.dock-item{display:flex;flex-direction:column;align-items:center;gap:3px;width:90px;color:var(--muted);font-size:10px;font-weight:700;transition:color .15s;}
+.dock-item.on{color:var(--pri);}
+.dock-add{width:54px;height:54px;border-radius:18px;margin-top:-26px;background:var(--grad);color:#042f2a;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 28px -8px rgba(45,212,191,.7),0 0 0 5px var(--bg);transition:transform .15s;}
+.dock-add:active{transform:scale(.9);}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--muted);margin-bottom:7px;}
+.form-input{width:100%;padding:14px 16px;border-radius:15px;background:var(--s1);border:1px solid var(--line);color:var(--text);font-size:15px;font-weight:500;transition:all .15s;}
+.form-input:focus{outline:none;border-color:var(--pri);background:var(--s2);box-shadow:0 0 0 3px rgba(45,212,191,.14);}
+.form-input::placeholder{color:var(--muted);opacity:.7;}
+select.form-input{appearance:none;-webkit-appearance:none;}
+.form-row{display:flex;gap:10px;}
+.form-row .form-group{flex:1;min-width:0;}
+.color-picker-wrap{display:flex;gap:8px;align-items:stretch;}
+.color-input{width:52px;height:50px;padding:0;border-radius:15px;border:1px solid var(--line);background:var(--s1);cursor:pointer;flex-shrink:0;}
+.color-input::-webkit-color-swatch{border:none;border-radius:11px;}
+.color-input::-webkit-color-swatch-wrapper{padding:4px;}
+.hint-box{font-size:12.5px;color:var(--muted);line-height:1.6;padding:13px 15px;background:rgba(45,212,191,.06);border:1px solid rgba(45,212,191,.2);border-radius:15px;margin-bottom:16px;}
+.hint-box b{color:var(--pri);}
+.ai-hint{font-size:12px;color:var(--muted);line-height:1.6;padding:13px 15px;background:var(--s1);border-radius:15px;border:1px dashed var(--line2);display:flex;gap:10px;align-items:center;}
+.divider{height:1px;background:var(--line);margin:20px 0;}
+.img-box{position:relative;width:100%;aspect-ratio:800/420;border-radius:20px;overflow:hidden;background:var(--s1);border:1.5px dashed var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;}
+.img-box:active{transform:scale(.985);}
+.img-box img{width:100%;height:100%;object-fit:cover;}
+.img-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);padding:8px;text-align:center;}
+.img-placeholder-icon{width:48px;height:48px;border-radius:16px;background:var(--s2);color:var(--pri);display:flex;align-items:center;justify-content:center;}
+.img-placeholder-text{font-size:12.5px;font-weight:700;}
+.img-size-info{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-top:9px;padding:0 2px;font-weight:600;}
+.img-size-info b{color:var(--success);}
+.img-size-badge{background:rgba(52,211,153,.12);color:var(--success);padding:3px 8px;border-radius:7px;font-weight:800;}
+.img-source-actions{display:flex;gap:8px;margin-top:10px;}
+.btn-mini{flex:1;padding:11px 8px;border-radius:13px;background:var(--s1);border:1px solid var(--line);color:var(--text);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;}
+.btn-mini:active{transform:scale(.96);background:var(--s2);}
+.btn-mini.primary{background:rgba(45,212,191,.12);border-color:rgba(45,212,191,.4);color:var(--pri);}
+.btn{width:100%;padding:15px;border-radius:16px;font-size:15px;font-weight:800;letter-spacing:-.2px;transition:transform .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--grad);color:#042f2a;box-shadow:0 12px 26px -12px rgba(45,212,191,.8);}
+.btn-secondary{background:var(--s2);color:var(--text);border:1px solid var(--line2);}
+.btn-danger{background:rgba(248,113,113,.14);color:var(--danger);border:1px solid rgba(248,113,113,.35);}
+.btn-ai{background:linear-gradient(135deg,#a78bfa,#fb7185);color:#fff;box-shadow:0 12px 26px -12px rgba(251,113,133,.8);}
+.btn-group{display:flex;gap:10px;margin-top:22px;}
+.btn-group .btn{flex:1;}
+.btn:disabled{opacity:.45;pointer-events:none;}
+.ai-status{display:flex;align-items:center;gap:9px;padding:12px 14px;border-radius:14px;background:var(--s1);border:1px solid var(--line);font-size:12.5px;font-weight:600;margin-bottom:4px;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+.status-dot.success{background:var(--success);box-shadow:0 0 10px var(--success);animation:pulse 2s infinite;}
+.status-dot.error{background:var(--danger);box-shadow:0 0 10px var(--danger);}
+.status-dot.loading{background:var(--warning);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.settings-section{margin-bottom:22px;}
+.settings-title{font-size:12px;font-weight:800;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.8px;}
+.settings-title .dot{width:6px;height:6px;border-radius:50%;background:var(--pri);}
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(2,4,8,.75);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .2s;}
+.modal-overlay.show{opacity:1;}
+.modal{width:100%;max-width:340px;background:var(--s2);border-radius:26px;padding:24px;border:1px solid var(--line2);transform:scale(.92) translateY(10px);transition:transform .25s cubic-bezier(.2,.9,.3,1.2);box-shadow:0 30px 60px -20px rgba(0,0,0,.9);}
+.modal-overlay.show .modal{transform:none;}
+.modal-title{font-size:17px;font-weight:800;margin-bottom:8px;letter-spacing:-.3px;}
+.modal-msg{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px;}
+.modal-actions{display:flex;gap:10px;}
+.modal-actions .btn{flex:1;padding:13px;font-size:14px;}
+
+.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));left:50%;transform:translate(-50%,-120px);z-index:300;padding:12px 18px;border-radius:16px;background:var(--s3);border:1px solid var(--line2);font-size:13px;font-weight:700;color:var(--text);box-shadow:0 18px 40px rgba(0,0,0,.6);transition:transform .35s cubic-bezier(.34,1.56,.64,1);max-width:calc(100vw - 40px);text-align:center;}
+.toast.show{transform:translate(-50%,0);}
+.toast-success{border-color:rgba(52,211,153,.5);}
+.toast-error{border-color:rgba(248,113,113,.55);}
+.spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.25);border-top-color:currentColor;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ============================================================
+   SKIN MANAGER v3 - Lightweight, same UI & features
+   ============================================================ */
+
+const STORAGE_KEY = "skinManagerState.v1";
+const AI_PROMPT = `You are an anime identification expert. Analyze this image carefully.
+Return ONLY a valid JSON object (no markdown, no code fences, no explanation) with EXACTLY these fields:
+{"id":"lowercase-slug","name":"Character Full Name","anime":"Anime - Form/Arc","icon":"emoji","preview":"#RRGGBB","desc":"short Indonesian max 30 chars"}`;
+
+const DEFAULT_SKINS = [
+  {id:"none",name:"Tanpa Skin",anime:"Original",icon:"🚫",preview:"#4f46e5",desc:"Tema asli",image:null},
+  {id:"naruto",name:"Uzumaki Naruto",anime:"Naruto - Kurama Mode",icon:"🦊",preview:"#FF8C00",desc:"Chakra Kyuubi menyala",image:"./images/naruto.jpg"},
+  {id:"akaza",name:"Akaza",anime:"Demon Slayer - Upper 3",icon:"❄️",preview:"#5B2C6F",desc:"Mata iblis di belakang",image:"./images/akaza.jpg"},
+  {id:"tanjiro",name:"Kamado Tanjiro",anime:"Demon Slayer - Water",icon:"🌊",preview:"#00B4D8",desc:"Water Breathing",image:"./images/tanjiro.png"},
+  {id:"zenitsu",name:"Agatsuma Zenitsu",anime:"Demon Slayer - Thunder",icon:"⚡",preview:"#FFB703",desc:"Petir menggelegar",image:"./images/zenitsu.jpg"},
+  {id:"waguri",name:"Kaoruko Waguri",anime:"Kaoru Hana wa Rin to Saku",icon:"🌸",preview:"#E86FA0",desc:"Senja yang lembut",image:"./images/waguri.jpg"},
+  {id:"itsuki",name:"Nakano Itsuki",anime:"Gotoubun - Sakura",icon:"🌸",preview:"#E11D2D",desc:"Kimono bunga sakura",image:"./images/itsuki.jpg"},
+  {id:"l",name:"L Lawliet",anime:"Death Note - Chess",icon:"♟️",preview:"#111827",desc:"Strategi detektif",image:"./images/l.jpg"},
+  {id:"goku",name:"Son Goku",anime:"Dragon Ball - Ultra",icon:"🐉",preview:"#FF4500",desc:"Ultra Instinct",image:"./images/goku.jpg"},
+  {id:"luffy",name:"Luffy Gear 5",anime:"One Piece",icon:"☁️",preview:"#FFFFFF",desc:"Joy Boy",image:"./images/luffy.jpg"}
+];
+
+/* ========== STATE ========== */
+let currentTheme = localStorage.getItem("skin-theme") || "dark";
+function applyTheme(theme) {
+  currentTheme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem("skin-theme", theme);
+  const themeMetaColors = {
+    'dark': '#0b0f19', 'light': '#f8fafc',
+    'purple': '#0f0a18', 'purple-light': '#faf5ff',
+    'orange': '#171008', 'orange-light': '#fffbeb',
+    'rose': '#180a0d', 'rose-light': '#fff1f2',
+    'blue': '#0a1024', 'blue-light': '#eff6ff',
+    'green': '#06140c', 'green-light': '#ecfdf5'
+  };
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = themeMetaColors[theme] || '#0b0f19';
+}
+
+let state = {
+  skins: [],
+  ai: { provider:"openai", model:"gpt-4o-mini", apiKey:"", baseUrl:"" },
+  route: "home",
+  editingId: null,
+  previewIndex: 0,
+  filter: "all",
+  query: "",
+  view: "grid"
+};
+let editForm = { id:"", name:"", anime:"", icon:"", imageBlob:null, imageUrl:null, preview:"#4f46e5", desc:"", _origSize:0, _newSize:0 };
+
+
+/* Cache: id -> blob URL (loaded once at boot) */
+const imageCache = new Map();
+
+/* ========== DB ========== */
+let dbPromise = null;
+function getDB() {
+  if (!dbPromise) dbPromise = new Promise((resolve, reject) => {
+    const req = indexedDB.open("SkinManagerDB", 1);
+    req.onupgradeneeded = e => e.target.result.createObjectStore("images");
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror = () => reject(req.error);
+  });
+  return dbPromise;
+}
+async function dbSave(id, blob) {
+  const db = await getDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction("images", "readwrite");
+    tx.objectStore("images").put(blob, id);
+    tx.oncomplete = res; tx.onerror = () => rej(tx.error);
+  });
+}
+async function dbDelete(id) {
+  const db = await getDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction("images", "readwrite");
+    tx.objectStore("images").delete(id);
+    tx.oncomplete = res; tx.onerror = () => rej(tx.error);
+  });
+}
+async function dbLoadAll() {
+  try {
+    const db = await getDB();
+    const store = db.transaction("images", "readonly").objectStore("images");
+    const keysReq = store.getAllKeys();
+    const valsReq = store.getAll();
+    await new Promise(res => {
+      let n = 0; const done = () => { if (++n === 2) res(); };
+      keysReq.onsuccess = done; valsReq.onsuccess = done;
+      keysReq.onerror = done; valsReq.onerror = done;
+    });
+    const keys = keysReq.result || [], vals = valsReq.result || [];
+    keys.forEach((k, i) => { if (vals[i]) imageCache.set(k, URL.createObjectURL(vals[i])); });
+  } catch(e) { console.warn("dbLoadAll", e); }
+}
+function cacheSet(id, blob) {
+  const old = imageCache.get(id);
+  if (old) URL.revokeObjectURL(old);
+  imageCache.set(id, URL.createObjectURL(blob));
+}
+function cacheDelete(id) {
+  const old = imageCache.get(id);
+  if (old) URL.revokeObjectURL(old);
+  imageCache.delete(id);
+}
+
+/* ========== PERSIST ========== */
+function loadState() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const p = JSON.parse(stored);
+      if (Array.isArray(p.skins) && p.skins.length) state.skins = p.skins;
+      if (p.ai) state.ai = { ...state.ai, ...p.ai };
+      if (p.ui && p.ui.view) state.view = p.ui.view;
+    }
+  } catch(e) { console.warn("load", e); }
+  if (!state.skins.length) {
+    state.skins = DEFAULT_SKINS.map(({ image, ...s }) => s);
+  }
+}
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ skins: state.skins, ai: state.ai, ui: { view: state.view } }));
+  } catch(e) { toast("Storage penuh", "error"); }
+}
+
+/* ========== UTILS ========== */
+function escapeHtml(s){
+  if (s == null) return "";
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function formatBytes(b){
+  if (!b || b < 0) return "0 B";
+  if (b < 1024) return b + " B";
+  if (b < 1048576) return (b/1024).toFixed(1) + " KB";
+  return (b/1048576).toFixed(2) + " MB";
+}
+function toast(msg, type="info"){
+  const el = document.createElement("div");
+  el.className = "toast toast-" + type;
+  el.textContent = msg;
+  document.body.appendChild(el);
+  requestAnimationFrame(() => el.classList.add("show"));
+  setTimeout(() => { el.classList.remove("show"); setTimeout(() => el.remove(), 400); }, 2400);
+}
+function confirmDialog(title, message, confirmLabel="Hapus"){
+  return new Promise(resolve => {
+    const ov = document.createElement("div");
+    ov.className = "modal-overlay";
+    ov.innerHTML = `<div class="modal">
+      <div class="modal-title">${escapeHtml(title)}</div>
+      <div class="modal-msg">${escapeHtml(message)}</div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" data-m="cancel">Batal</button>
+        <button class="btn ${confirmLabel === "Hapus" ? "btn-danger" : "btn-primary"}" data-m="ok">${escapeHtml(confirmLabel)}</button>
+      </div></div>`;
+    document.body.appendChild(ov);
+    requestAnimationFrame(() => ov.classList.add("show"));
+    const close = v => { ov.classList.remove("show"); setTimeout(() => ov.remove(), 200); resolve(v); };
+    ov.querySelector('[data-m="cancel"]').onclick = () => close(false);
+    ov.querySelector('[data-m="ok"]').onclick = () => close(true);
+    ov.onclick = e => { if (e.target === ov) close(false); };
+  });
+}
+function slugify(s){
+  return String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/\.[^.]+$/, "").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+}
+
+function blobToDataUrl(blob){
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = e => res(e.target.result);
+    fr.onerror = () => rej(new Error("Read failed"));
+    fr.readAsDataURL(blob);
+  });
+}
+
+/* ========== ICONS ========== */
+const ICONS = {
+  home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  settings:'<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
+  back:'<path d="M15 18l-6-6 6-6"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  upload:'<path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>',
+  download:'<path d="M12 4v12M7 11l5 5 5-5M5 20h14"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+  star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+
+  grid:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+  list:'<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
+  image:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/>',
+  rotate:'<path d="M20 12a8 8 0 11-2.5-5.8M20 4v5h-5"/>',
+  sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',
+  plug:'<path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 01-12 0zM12 17v4"/>',
+  eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
+  layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+  palette:'<circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.7-.1 2.5-.4.8-.3 1.5-.8 1.5-1.6 0-.5-.2-1-.5-1.4-.3-.4-.5-.9-.5-1.4 0-1.1.9-2 2-2h2c3.3 0 6-2.7 6-6 0-4.4-4.5-8-10-8z"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+  sun:'<circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+  moon:'<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>'
+};
+function ic(n, s=20){
+  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]||""}</svg>`;
+}
+
+/* ========== IMAGE COMPRESS ========== */
+function loadImgFile(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = e => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error("Gambar tidak valid")); i.src = e.target.result; };
+    r.onerror = () => rej(new Error("Baca file gagal"));
+    r.readAsDataURL(file);
+  });
+}
+async function compressImage(src, rotation=0, flipX=false){
+  let img;
+  if (src instanceof Blob){
+    try { img = await createImageBitmap(src); } catch(e) { img = await loadImgFile(src); }
+  } else {
+    const blob = await (await fetch(src)).blob();
+    try { img = await createImageBitmap(blob); } catch(e) {
+      img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => rej(new Error("Invalid")); i.src = src; });
+    }
+  }
+  const W = 800, H = 420;
+  const tc = document.createElement("canvas");
+  const tctx = tc.getContext("2d");
+  const rot = rotation % 180 !== 0;
+  tc.width = rot ? img.height : img.width;
+  tc.height = rot ? img.width : img.height;
+  tctx.translate(tc.width/2, tc.height/2);
+  tctx.rotate(rotation * Math.PI/180);
+  if (flipX) tctx.scale(-1, 1);
+  tctx.drawImage(img, -img.width/2, -img.height/2);
+  if (img.close) img.close();
+
+  const ratio = tc.width / tc.height;
+  let tw, th;
+  if (ratio >= W/H) { tw = W; th = Math.round(W/ratio); }
+  else { th = H; tw = Math.round(H*ratio); }
+  const c = document.createElement("canvas");
+  c.width = tw; c.height = th;
+  const ctx = c.getContext("2d");
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(tc, 0, 0, tc.width, tc.height, 0, 0, tw, th);
+
+  const MAX = 120*1024;
+  let q = 0.88;
+  let dataUrl = c.toDataURL("image/jpeg", q);
+  while (dataUrl.length * 0.75 > MAX && q > 0.45){ q -= 0.07; dataUrl = c.toDataURL("image/jpeg", q); }
+  const blob = await (await fetch(dataUrl)).blob();
+  const origSize = (src instanceof Blob) ? src.size : Math.round(src.length * 0.75);
+  return { blob, dataUrl, originalSize: origSize, newSize: blob.size };
+}
+
+/* ========== JSZIP (lazy) ========== */
+let _jszip = null;
+function ensureJSZip(){
+  if (window.JSZip) return Promise.resolve(window.JSZip);
+  if (!_jszip) _jszip = new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+    s.onload = () => res(window.JSZip);
+    s.onerror = () => rej(new Error("Gagal muat JSZip"));
+    document.head.appendChild(s);
+  });
+  return _jszip;
+}
+
+/* ========== AI ========== */
+async function testAI({ provider, model, apiKey, baseUrl }){
+  const start = performance.now();
+  try {
+    if (provider === "openai" || provider === "custom"){
+      const base = (baseUrl || "https://api.openai.com").replace(/\/$/,"");
+      const r = await fetch(base + "/v1/models", { headers: { "Authorization": "Bearer " + apiKey } });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+    } else if (provider === "gemini"){
+      const r = await fetch("https://generativelanguage.googleapis.com/v1beta/models?key=" + encodeURIComponent(apiKey));
+      if (!r.ok) throw new Error("HTTP " + r.status);
+    } else if (provider === "anthropic"){
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json", "x-api-key": apiKey, "anthropic-version":"2023-06-01", "anthropic-dangerous-direct-browser-access":"true" },
+        body: JSON.stringify({ model, max_tokens:5, messages:[{role:"user",content:"ping"}] })
+      });
+      if (r.status >= 500) throw new Error("HTTP " + r.status);
+    }
+    return { ok: true, ping: Math.round(performance.now() - start) };
+  } catch(e) { return { ok: false, error: e.message || "Gagal" }; }
+}
+async function aiVision(dataUrl){
+  const { provider, model, apiKey, baseUrl } = state.ai;
+  if (!apiKey) throw new Error("API key belum diatur");
+  const b64 = dataUrl.split(",")[1];
+  if (provider === "openai" || provider === "custom"){
+    const base = (baseUrl || "https://api.openai.com").replace(/\/$/,"");
+    const r = await fetch(base + "/v1/chat/completions", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json", "Authorization":"Bearer " + apiKey },
+      body: JSON.stringify({ model, messages:[{role:"user",content:[{type:"text",text:AI_PROMPT},{type:"image_url",image_url:{url:dataUrl}}]}], max_tokens:400, temperature:0.3 })
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const j = await r.json();
+    return j.choices[0].message.content;
+  }
+  if (provider === "gemini"){
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`, {
+      method:"POST", headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ contents:[{ parts:[{text:AI_PROMPT},{inline_data:{mime_type:"image/jpeg",data:b64}}] }] })
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const j = await r.json();
+    return j.candidates[0].content.parts[0].text;
+  }
+  if (provider === "anthropic"){
+    const r = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json", "x-api-key": apiKey, "anthropic-version":"2023-06-01", "anthropic-dangerous-direct-browser-access":"true" },
+      body: JSON.stringify({ model, max_tokens:400, messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:AI_PROMPT}]}] })
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const j = await r.json();
+    return j.content[0].text;
+  }
+  throw new Error("Provider tidak didukung");
+}
+function parseAIJson(t){
+  t = t.trim().replace(/^```(?:json)?\s*/i,"").replace(/```$/,"").trim();
+  const s = t.indexOf("{"), e = t.lastIndexOf("}");
+  if (s === -1 || e === -1) throw new Error("Format AI tidak valid");
+  return JSON.parse(t.slice(s, e+1));
+}
+
+/* ========== PREVIEW MODAL (rotate) ========== */
+function showPreviewModal(src){
+  let rotation = 0;
+  let flipX = false;
+  const isFile = src instanceof Blob;
+  const ov = document.createElement("div");
+  ov.className = "modal-overlay";
+  ov.style.zIndex = "210";
+  ov.innerHTML = `<div class="modal" style="max-width:400px;text-align:center;">
+    <div class="modal-title" style="margin-bottom:12px;">Preview & Rotate</div>
+    <div style="width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+      <img id="pv-img" style="max-width:100%;max-height:100%;transition:transform .2s;object-fit:contain;" src="">
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:16px;">
+      <button class="btn btn-secondary" id="pv-rot" style="flex:1;">↻ Rotate</button>
+      <button class="btn btn-secondary" id="pv-flip" style="flex:1;">⇄ Flip</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="pv-cancel">Batal</button>
+      <button class="btn btn-primary" id="pv-apply">Gunakan</button>
+    </div></div>`;
+  document.body.appendChild(ov);
+  requestAnimationFrame(() => ov.classList.add("show"));
+
+  const imgEl = ov.querySelector("#pv-img");
+  const fileUrl = isFile ? URL.createObjectURL(src) : "";
+  imgEl.src = fileUrl || src;
+  const update = () => {
+    let t = `rotate(${rotation}deg)`;
+    if (flipX) t += ` scaleX(-1)`;
+    if (rotation % 180 !== 0) t += ` scale(0.6)`;
+    imgEl.style.transform = t;
+  };
+  imgEl.onload = update;
+  ov.querySelector("#pv-rot").onclick = () => { rotation = (rotation + 90) % 360; update(); };
+  ov.querySelector("#pv-flip").onclick = () => { flipX = !flipX; update(); };
+  const cleanup = () => { if (fileUrl) URL.revokeObjectURL(fileUrl); ov.classList.remove("show"); setTimeout(() => ov.remove(), 200); };
+  ov.querySelector("#pv-cancel").onclick = cleanup;
+
+  ov.querySelector("#pv-apply").onclick = async () => {
+    const btn = ov.querySelector("#pv-apply");
+    btn.innerHTML = `<span class="spinner"></span>`; btn.disabled = true;
+    try {
+      const r = await compressImage(src, rotation, flipX);
+      editForm.imageBlob = r.blob;
+      editForm.imageUrl = URL.createObjectURL(r.blob);
+      editForm._origSize = r.originalSize;
+      editForm._newSize = r.newSize;
+      cleanup();
+
+      // Update img-box in form
+      const box = document.getElementById("img-box");
+      if (box) box.innerHTML = `<img src="${editForm.imageUrl}" alt="preview">`;
+      const formGroup = box ? box.closest(".form-group") : null;
+      if (formGroup){
+        const infoEl = formGroup.querySelector(".img-size-info");
+        if (infoEl) infoEl.outerHTML = `<div class="img-size-info">
+          <span>Asli: ${formatBytes(r.originalSize)} → <b>${formatBytes(r.newSize)}</b></span>
+          <span class="img-size-badge">−${Math.round((1-r.newSize/r.originalSize)*100)}%</span></div>`;
+      }
+      const aiBtn = document.getElementById("btn-ai");
+      if (aiBtn) aiBtn.disabled = false;
+      toast(`Gambar dipilih • ${formatBytes(r.newSize)}`, "success");
+    } catch(e) {
+      toast("Gagal: " + e.message, "error");
+      btn.innerHTML = "Gunakan"; btn.disabled = false;
+    }
+  };
+}
+
+/* ========== RENDER ========== */
+function getFiltered(){
+  const q = (state.query || "").trim().toLowerCase();
+  return state.skins.filter(s =>
+    (state.filter !== "fav" || s.fav) &&
+    (!q || [s.id, s.name, s.anime, s.desc].join(" ").toLowerCase().includes(q))
+  );
+}
+function skinListHtml(){
+  const list = getFiltered();
+  if (!state.skins.length) return `<div class="empty-state"><div class="empty-icon">${ic("layers",26)}</div><div class="empty-text">Belum ada skin.<br>Tap tombol + untuk menambahkan.</div></div>`;
+  if (!list.length) return `<div class="empty-state"><div class="empty-icon">${ic("search",26)}</div><div class="empty-text">Tidak ada skin yang cocok.</div></div>`;
+  return list.map(s => {
+    const hasImg = imageCache.has(s.id);
+    const c = escapeHtml(s.preview || "#4f46e5");
+    const id = escapeHtml(s.id);
+    const icon = escapeHtml(s.icon || "🎨");
+    return `<div class="skin-card" data-action="open" data-id="${id}" style="--c:${c}">
+      <div class="sc-media">${hasImg ? `<img data-imgid="${id}" alt="" loading="lazy" decoding="async">` : `<span class="sc-emoji">${icon}</span>`}</div>
+      <div class="sc-shade"></div>
+      <div class="sc-body">
+        <div class="sc-icon">${icon}</div>
+        <div class="sc-txt"><div class="sc-name">${escapeHtml(s.name)}</div><div class="sc-id">${id}</div></div>
+      </div>
+      <div class="sc-tools">
+        <button class="sc-btn ${s.fav ? "on" : ""}" data-action="fav" data-id="${id}">${ic("star",15)}</button>
+        
+        <button class="del" data-action="delete-skin" data-id="${id}">${ic("trash",15)}</button>
+      </div></div>`;
+  }).join("");
+}
+function bindImages(){
+  document.querySelectorAll("[data-imgid]").forEach(img => {
+    const url = imageCache.get(img.dataset.imgid);
+    if (url && img.src !== url) img.src = url;
+  });
+}
+function refreshList(){
+  const box = document.getElementById("skin-list");
+  if (!box) return;
+  box.className = "skin-grid " + state.view;
+  box.innerHTML = skinListHtml();
+  const cnt = document.getElementById("list-count");
+  if (cnt) cnt.textContent = getFiltered().length;
+  bindImages();
+}
+function patchHero(){
+  const pv = state.skins[state.previewIndex];
+  const card = document.querySelector(".preview-card");
+  if (!pv || !card) return;
+  card.dataset.id = pv.id;
+  const bg = card.querySelector(".preview-bg");
+  if (bg) bg.style.background = `linear-gradient(135deg,${pv.preview},${pv.preview}55)`;
+  let img = card.querySelector(".preview-img");
+  const hasImg = imageCache.has(pv.id);
+  if (hasImg){
+    if (!img){ img = document.createElement("img"); img.className = "preview-img"; img.alt = ""; card.insertBefore(img, card.querySelector(".preview-overlay")); }
+    img.dataset.imgid = pv.id;
+    const url = imageCache.get(pv.id);
+    if (url && img.src !== url) img.src = url;
+  } else if (img) img.remove();
+  const nameEl = document.querySelector(".hero-name");
+  const subEl = document.querySelector(".hero-sub");
+  if (nameEl) nameEl.textContent = pv.name;
+  if (subEl) subEl.textContent = [pv.anime, pv.desc].filter(x => x && x !== "-").join(" · ") || pv.id;
+  const favBtn = document.querySelector('.hero-meta [data-action="fav"]');
+  if (favBtn){ favBtn.dataset.id = pv.id; favBtn.style.color = pv.fav ? "#fbbf24" : ""; }
+  document.querySelectorAll(".preview-dot").forEach((d, i) => d.classList.toggle("active", i === state.previewIndex));
+}
+function dock(active){
+  return `<nav class="dock">
+    <button class="dock-item ${active === "home" ? "on" : ""}" data-action="go-home">${ic("home",22)}<span>Beranda</span></button>
+    <button class="dock-add" data-action="go-add">${ic("plus",26)}</button>
+    <button class="dock-item ${active === "settings" ? "on" : ""}" data-action="go-settings">${ic("settings",22)}<span>Pengaturan</span></button>
+  </nav>`;
+}
+function renderHome(){
+  const skins = state.skins;
+  const count = skins.length;
+  const favCount = skins.filter(s => s.fav).length;
+  const pv = skins[Math.min(state.previewIndex, count - 1)] || null;
+  let hero = "";
+  if (pv){
+    const hasImg = imageCache.has(pv.id);
+    const c = escapeHtml(pv.preview || "#4f46e5");
+    const d = new Date();
+    const dateStr = `${d.getDate()} ${d.toLocaleString("id-ID",{month:"short"})} ${d.getFullYear()} · ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+    hero = `<div class="hero">
+      <div class="preview-card" data-action="open" data-id="${escapeHtml(pv.id)}">
+        <div class="preview-bg" style="background:linear-gradient(135deg,${c},${c}55)"></div>
+        ${hasImg ? `<img class="preview-img" data-imgid="${escapeHtml(pv.id)}" alt="">` : ""}
+        <div class="preview-overlay"></div>
+        <div class="pv-header">
+          <div class="pv-title">TOTAL SALDO KEUANGAN</div>
+          <div class="pv-header-actions">
+            <div class="pv-pill-btn">Hari ini ▾</div>
+            <div class="pv-icon-btn">${ic("eye",13)}</div>
+            <div class="pv-icon-btn">${ic("edit",13)}</div>
+          </div>
+        </div>
+        <div class="pv-balance">
+          <div class="pv-dots">${"<span></span>".repeat(10)}</div>
+
+        </div>
+        <div class="pv-footer">
+          <div class="pv-footer-l"><div class="pv-footer-label">Tanggal hari ini</div><div class="pv-footer-val">${dateStr}</div></div>
+          <div class="pv-footer-r"><div class="pv-footer-label">Status</div><div class="pv-status">terhubung</div></div>
+        </div>
+
+      </div>
+      <div class="hero-meta">
+        <div style="min-width:0;">
+          <div class="hero-name">${escapeHtml(pv.name)}</div>
+          <div class="hero-sub">${escapeHtml([pv.anime, pv.desc].filter(x => x && x !== "-").join(" · ") || pv.id)}</div>
+        </div>
+        <button class="icon-btn" style="${pv.fav ? "color:#fbbf24;" : ""}" data-action="fav" data-id="${escapeHtml(pv.id)}">${ic("star",18)}</button>
+      </div>
+      <div class="preview-dots">${skins.map((_, i) => `<div class="preview-dot ${i === state.previewIndex ? "active" : ""}" data-action="set-preview" data-index="${i}"></div>`).join("")}</div>
+    </div>`;
+  }
+  return `<div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">${ic("palette",20)}</div>
+      <div><div class="topbar-title">Skin Manager</div><div class="topbar-sub">${count} skin tersimpan</div></div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" data-action="toggle-theme" title="Ganti Tema">${ic(currentTheme.includes('light') ? 'moon' : 'sun', 18)}</button>
+    </div>
+  </div>
+  <div class="screen">
+    ${hero}
+    <div class="toolbar">
+      <div class="search-wrap">${ic("search",17)}<input class="search-input" id="q-input" value="${escapeHtml(state.query)}" placeholder="Cari nama, ID, atau anime…" autocomplete="off"></div>
+      <div class="seg">
+        <button class="${state.view === "grid" ? "on" : ""}" data-action="set-view" data-v="grid">${ic("grid",18)}</button>
+        <button class="${state.view === "list" ? "on" : ""}" data-action="set-view" data-v="list">${ic("list",18)}</button>
+      </div>
+    </div>
+    <div class="chips">
+      <button class="chip ${state.filter === "all" ? "on" : ""}" data-action="set-filter" data-v="all">Semua <b>${count}</b></button>
+      <button class="chip ${state.filter === "fav" ? "on" : ""}" data-action="set-filter" data-v="fav">${ic("star",13)} Favorit <b>${favCount}</b></button>
+    </div>
+    <div class="section-head">
+      <div class="section-title">Semua Skin</div>
+      <div class="section-count" id="list-count">${getFiltered().length}</div>
+    </div>
+    <div class="skin-grid ${state.view}" id="skin-list">${skinListHtml()}</div>
+  </div>${dock("home")}`;
+}
+
+function renderFormFields(){
+  return `<div class="form-group"><label class="form-label">ID</label>
+    <input class="form-input" id="f-id" value="${escapeHtml(editForm.id)}" placeholder="contoh: naruto" autocomplete="off"></div>
+  <div class="form-group"><label class="form-label">Name</label>
+    <input class="form-input" id="f-name" value="${escapeHtml(editForm.name)}" placeholder="Nama karakter" autocomplete="off"></div>
+  <div class="form-group"><label class="form-label">Anime / Series</label>
+    <input class="form-input" id="f-anime" value="${escapeHtml(editForm.anime)}" placeholder="Judul - Mode/Arc" autocomplete="off"></div>
+  <div class="form-row">
+    <div class="form-group"><label class="form-label">Icon (emoji)</label>
+      <input class="form-input" id="f-icon" value="${escapeHtml(editForm.icon)}" placeholder="🌸" autocomplete="off"></div>
+    <div class="form-group"><label class="form-label">Preview Color</label>
+      <div class="color-picker-wrap" style="margin-bottom:8px;">
+        <input class="color-input" type="color" id="f-preview" value="${escapeHtml(editForm.preview)}">
+        <input class="form-input" id="f-preview-hex" value="${escapeHtml(editForm.preview)}" placeholder="#4f46e5" autocomplete="off" style="padding:14px 12px;min-width:0;">
+      </div>
+      ${editForm.imageUrl ? `<button class="btn-mini primary" data-action="auto-color" style="width:100%;">${ic("image",14)} Ambil Warna Dominan</button>` : ""}
+    </div>
+  </div>
+  <div class="form-group"><label class="form-label">Desc</label>
+    <input class="form-input" id="f-desc" value="${escapeHtml(editForm.desc)}" placeholder="Deskripsi singkat" autocomplete="off"></div>`;
+}
+function renderImageBox(){
+  const has = !!editForm.imageUrl;
+  const inner = has
+    ? `<img src="${escapeHtml(editForm.imageUrl)}" alt="preview">`
+    : `<div class="img-placeholder">
+        <div class="img-placeholder-icon">${ic("image",24)}</div>
+        <div class="img-placeholder-text">Tap untuk pilih gambar</div>
+        <div style="font-size:10.5px;color:var(--muted);font-weight:600;">Auto compress (max 800×420)</div>
+      </div>`;
+  const sizeHtml = editForm._origSize > 0
+    ? `<div class="img-size-info">
+        <span>Asli: ${formatBytes(editForm._origSize)} → <b>${formatBytes(editForm._newSize)}</b></span>
+        <span class="img-size-badge">−${Math.round((1 - editForm._newSize/editForm._origSize)*100)}%</span></div>`
+    : `<div class="img-size-info"><span>${has ? "Gambar tersimpan" : "Belum ada gambar"}</span></div>`;
+  return `<div class="form-group">
+    <label class="form-label">Image (max 800×420)</label>
+    <div class="img-box" id="img-box" data-action="pick-image">${inner}</div>
+    <div class="img-source-actions">
+      <button class="btn-mini primary" data-action="pick-image">${ic("image",16)} Pilih Gambar</button>
+      ${has ? `<button class="btn-mini" data-action="rotate-image">${ic("rotate",16)} Rotate</button>` : ""}
+    </div>${sizeHtml}</div>`;
+}
+function renderDetail(){
+  const skin = state.skins.find(s => s.id === state.editingId);
+  if (!skin) return renderHome();
+  return `<div class="topbar">
+    <button class="icon-btn" data-action="back">${ic("back",20)}</button>
+    <div style="text-align:center;flex:1;"><div class="topbar-title" style="font-size:15px;">Edit Skin</div>
+      <div class="topbar-sub">${escapeHtml(skin.id)}</div></div>
+    <button class="icon-btn danger" data-action="delete-current">${ic("trash",18)}</button></div>
+  <div class="screen">
+    ${renderImageBox()}${renderFormFields()}
+    <div class="btn-group">
+      <button class="btn btn-secondary" data-action="back">Batal</button>
+      <button class="btn btn-primary" data-action="save-edit">Simpan</button>
+    </div></div>`;
+}
+function renderAdd(){
+  const aiOk = !!state.ai.apiKey;
+  const hasImg = !!(editForm.imageBlob || editForm.imageUrl);
+  return `<div class="topbar">
+    <button class="icon-btn" data-action="back">${ic("back",20)}</button>
+    <div style="text-align:center;flex:1;"><div class="topbar-title" style="font-size:15px;">Tambah Skin</div>
+      <div class="topbar-sub">Manual atau pakai AI</div></div>
+    <div style="width:40px;"></div></div>
+  <div class="screen">
+    ${aiOk ? `<div class="hint-box">Pilih gambar → tap <b>Auto-fill AI</b> untuk isi otomatis.</div>` : `<div class="hint-box">Atur API key di <b>Pengaturan</b> untuk auto-fill.</div>`}
+    ${renderImageBox()}
+    ${aiOk ? `<button class="btn btn-ai" id="btn-ai" data-action="ai-autofill" style="margin-bottom:20px;" ${hasImg ? "" : "disabled"}>${ic("sparkle",18)} Auto-fill dengan AI</button>` : ""}
+    ${renderFormFields()}
+    <div class="btn-group">
+      <button class="btn btn-secondary" data-action="back">Batal</button>
+      <button class="btn btn-primary" data-action="save-add">Tambah</button>
+    </div></div>`;
+}
+function renderSettings(){
+  const { provider, model, apiKey, baseUrl } = state.ai;
+  const sug = { openai:["gpt-4o-mini","gpt-4o","gpt-4.1-mini","gpt-4.1"], gemini:["gemini-1.5-flash","gemini-1.5-pro","gemini-2.0-flash"], anthropic:["claude-3-7-sonnet-20250219","claude-3-5-sonnet-latest","claude-3-5-haiku-latest"], custom:["gpt-4o-mini","llama-3.2-90b-vision"] }[provider] || [];
+  return `<div class="topbar">
+    <button class="icon-btn" data-action="back">${ic("back",20)}</button>
+    <div style="text-align:center;flex:1;"><div class="topbar-title" style="font-size:15px;">Pengaturan AI</div>
+      <div class="topbar-sub">Konfigurasi provider</div></div>
+    <div style="width:40px;"></div></div>
+  <div class="screen">
+    <div class="settings-section">
+      <div class="settings-title" style="display:none;"><span class="dot"></span>Tema Warna</div>
+      <div style="display:none;">
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#2dd4bf,#38bdf8);border:3px solid ${currentTheme==='dark'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="dark" aria-label="Teal Gelap"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#c084fc);border:3px solid ${currentTheme==='purple'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="purple" aria-label="Ungu Gelap"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#f97316,#f59e0b);border:3px solid ${currentTheme==='orange'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="orange" aria-label="Oranye Gelap"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fb7185,#f43f5e);border:3px solid ${currentTheme==='rose'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="rose" aria-label="Pink Gelap"></button>
+
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#f8fafc,#e2e8f0);border:3px solid ${currentTheme==='light'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="light" aria-label="Teal Terang"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#faf5ff,#e9d5ff);border:3px solid ${currentTheme==='purple-light'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="purple-light" aria-label="Ungu Terang"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fffbeb,#fde68a);border:3px solid ${currentTheme==='orange-light'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="orange-light" aria-label="Oranye Terang"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fff1f2,#fecdd3);border:3px solid ${currentTheme==='rose-light'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="rose-light" aria-label="Pink Terang"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#60a5fa);border:3px solid ${currentTheme==='blue'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="blue" aria-label="Biru Gelap"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:3px solid ${currentTheme==='blue-light'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="blue-light" aria-label="Biru Terang"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#10b981,#34d399);border:3px solid ${currentTheme==='green'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="green" aria-label="Hijau Gelap"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:3px solid ${currentTheme==='green-light'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="green-light" aria-label="Hijau Terang"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);border:3px solid ${currentTheme==='yellow'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="yellow" aria-label="Kuning Gelap"></button>
+        <button style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fefce8,#fef08a);border:3px solid ${currentTheme==='yellow-light'?'var(--text)':'transparent'};transition:border .2s;" data-action="set-theme" data-v="yellow-light" aria-label="Kuning Terang"></button>
+      </div>
+    </div>
+    <div class="settings-section">
+      <div class="settings-title"><span class="dot"></span>Tema Warna</div>
+      <div style="background:var(--s1);border:1px solid var(--line);border-radius:18px;padding:16px;">
+        <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:12px;letter-spacing:.5px;">MODE GELAP</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-bottom:16px;">
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2dd4bf,#38bdf8);border:2px solid ${currentTheme==='dark'?'var(--text)':'transparent'};box-shadow:${currentTheme==='dark'?'0 0 12px rgba(45,212,191,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="dark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='dark'?1:0};transform:scale(${currentTheme==='dark'?1:0.5});transition:all .2s;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5));"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#a78bfa,#c084fc);border:2px solid ${currentTheme==='purple'?'var(--text)':'transparent'};box-shadow:${currentTheme==='purple'?'0 0 12px rgba(167,139,250,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="purple"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='purple'?1:0};transform:scale(${currentTheme==='purple'?1:0.5});transition:all .2s;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5));"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f97316,#f59e0b);border:2px solid ${currentTheme==='orange'?'var(--text)':'transparent'};box-shadow:${currentTheme==='orange'?'0 0 12px rgba(249,115,22,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='orange'?1:0};transform:scale(${currentTheme==='orange'?1:0.5});transition:all .2s;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5));"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fb7185,#f43f5e);border:2px solid ${currentTheme==='rose'?'var(--text)':'transparent'};box-shadow:${currentTheme==='rose'?'0 0 12px rgba(251,113,133,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="rose"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='rose'?1:0};transform:scale(${currentTheme==='rose'?1:0.5});transition:all .2s;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5));"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#3b82f6,#60a5fa);border:2px solid ${currentTheme==='blue'?'var(--text)':'transparent'};box-shadow:${currentTheme==='blue'?'0 0 12px rgba(59,130,246,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='blue'?1:0};transform:scale(${currentTheme==='blue'?1:0.5});transition:all .2s;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5));"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#10b981,#34d399);border:2px solid ${currentTheme==='green'?'var(--text)':'transparent'};box-shadow:${currentTheme==='green'?'0 0 12px rgba(16,185,129,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='green'?1:0};transform:scale(${currentTheme==='green'?1:0.5});transition:all .2s;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.5));"><path d="M20 6L9 17l-5-5"/></svg></button>
+
+        </div>
+        <div style="height:1px;background:var(--line);margin:16px 0;"></div>
+        <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:12px;letter-spacing:.5px;">MODE TERANG</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;">
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f8fafc,#e2e8f0);border:2px solid ${currentTheme==='light'?'var(--text)':'rgba(0,0,0,0.1)'};box-shadow:${currentTheme==='light'?'0 0 12px rgba(0,0,0,0.2)':'none'};transition:all .2s;" data-action="set-theme" data-v="light"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='light'?1:0};transform:scale(${currentTheme==='light'?1:0.5});transition:all .2s;"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#faf5ff,#e9d5ff);border:2px solid ${currentTheme==='purple-light'?'var(--text)':'rgba(0,0,0,0.1)'};box-shadow:${currentTheme==='purple-light'?'0 0 12px rgba(167,139,250,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="purple-light"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='purple-light'?1:0};transform:scale(${currentTheme==='purple-light'?1:0.5});transition:all .2s;"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fffbeb,#fde68a);border:2px solid ${currentTheme==='orange-light'?'var(--text)':'rgba(0,0,0,0.1)'};box-shadow:${currentTheme==='orange-light'?'0 0 12px rgba(249,115,22,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="orange-light"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='orange-light'?1:0};transform:scale(${currentTheme==='orange-light'?1:0.5});transition:all .2s;"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fff1f2,#fecdd3);border:2px solid ${currentTheme==='rose-light'?'var(--text)':'rgba(0,0,0,0.1)'};box-shadow:${currentTheme==='rose-light'?'0 0 12px rgba(251,113,133,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="rose-light"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='rose-light'?1:0};transform:scale(${currentTheme==='rose-light'?1:0.5});transition:all .2s;"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:2px solid ${currentTheme==='blue-light'?'var(--text)':'rgba(0,0,0,0.1)'};box-shadow:${currentTheme==='blue-light'?'0 0 12px rgba(59,130,246,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="blue-light"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='blue-light'?1:0};transform:scale(${currentTheme==='blue-light'?1:0.5});transition:all .2s;"><path d="M20 6L9 17l-5-5"/></svg></button>
+          <button style="width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:2px solid ${currentTheme==='green-light'?'var(--text)':'rgba(0,0,0,0.1)'};box-shadow:${currentTheme==='green-light'?'0 0 12px rgba(16,185,129,0.5)':'none'};transition:all .2s;" data-action="set-theme" data-v="green-light"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:${currentTheme==='green-light'?1:0};transform:scale(${currentTheme==='green-light'?1:0.5});transition:all .2s;"><path d="M20 6L9 17l-5-5"/></svg></button>
+
+        </div>
+      </div>
+    </div>
+    <div class="settings-section"><div class="settings-title"><span class="dot"></span>Provider</div>
+      <select class="form-input" id="s-provider">
+        <option value="openai" ${provider==="openai"?"selected":""}>OpenAI</option>
+        <option value="gemini" ${provider==="gemini"?"selected":""}>Google Gemini</option>
+        <option value="anthropic" ${provider==="anthropic"?"selected":""}>Anthropic Claude</option>
+        <option value="custom" ${provider==="custom"?"selected":""}>Custom (OpenAI-compatible)</option>
+      </select></div>
+    <div class="settings-section"><div class="settings-title"><span class="dot"></span>Model</div>
+      <input class="form-input" id="s-model" value="${escapeHtml(model)}" list="model-list" placeholder="nama model">
+      <datalist id="model-list">${sug.map(s => `<option value="${escapeHtml(s)}">`).join("")}</datalist></div>
+    <div class="settings-section"><div class="settings-title"><span class="dot"></span>API Key</div>
+      <input class="form-input" id="s-key" type="password" value="${escapeHtml(apiKey)}" placeholder="sk-..." autocomplete="off">
+      <div style="margin-top:8px;"><button class="btn btn-secondary" style="padding:10px;font-size:12px;" data-action="toggle-key">Tampilkan</button></div></div>
+    <div class="settings-section"><div class="settings-title"><span class="dot"></span>Base URL <span style="color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0;">(opsional)</span></div>
+      <input class="form-input" id="s-base" value="${escapeHtml(baseUrl)}" placeholder="https://api.openai.com"></div>
+    <button class="btn btn-secondary" data-action="test-ai" id="btn-test" style="margin-bottom:12px;">${ic("plug",18)} Test Koneksi</button>
+    <div class="ai-status" id="ai-status" style="display:none;"><div class="status-dot" id="ai-dot"></div><span id="ai-status-text">—</span></div>
+    <div class="divider"></div>
+    <button class="btn btn-primary" data-action="save-settings">Simpan Pengaturan</button>
+    <div class="divider"></div>
+    <div class="settings-section"><div class="settings-title"><span class="dot"></span>Data</div>
+      <button class="btn btn-secondary" data-action="export-json" style="margin-bottom:10px;">${ic("upload",18)} Export ZIP</button>
+      <button class="btn btn-secondary" data-action="import-json">${ic("download",18)} Import JSON / ZIP</button></div>
+    <div class="ai-hint">${ic("lock",18)}<span>API key disimpan lokal di perangkat ini.</span></div>
+  </div>${dock("settings")}`;
+}
+
+let lastRoute = "";
+function render(){
+  const app = document.getElementById("app");
+  let html = "";
+  if (state.route === "home") html = renderHome();
+  else if (state.route === "detail") html = renderDetail();
+  else if (state.route === "add") html = renderAdd();
+  else if (state.route === "settings") html = renderSettings();
+  app.innerHTML = html;
+  if (state.route !== lastRoute){
+    const sc = app.querySelector(".screen");
+    if (sc) sc.classList.add("enter");
+    lastRoute = state.route;
+  }
+  bindFormInputs();
+}
+function bindFormInputs(){
+  const map = { "f-id":"id","f-name":"name","f-anime":"anime","f-icon":"icon","f-desc":"desc" };
+  Object.keys(map).forEach(fid => {
+    const el = document.getElementById(fid);
+    if (el) el.addEventListener("input", () => { editForm[map[fid]] = el.value; });
+  });
+  const color = document.getElementById("f-preview");
+  const hex = document.getElementById("f-preview-hex");
+  if (color && hex){
+    color.addEventListener("input", () => { editForm.preview = color.value; hex.value = color.value; });
+    hex.addEventListener("input", () => {
+      if (/^#[0-9a-fA-F]{6}$/.test(hex.value)){ editForm.preview = hex.value; color.value = hex.value; }
+    });
+  }
+  const prov = document.getElementById("s-provider");
+  if (prov) prov.addEventListener("change", () => {
+    const v = id => { const e = document.getElementById(id); return e ? e.value.trim() : ""; };
+    state.ai = { ...state.ai, provider: prov.value, model: v("s-model") || state.ai.model, apiKey: v("s-key"), baseUrl: v("s-base") };
+    render();
+  });
+  const q = document.getElementById("q-input");
+  if (q){
+    let t;
+    q.addEventListener("input", () => {
+      state.query = q.value;
+      clearTimeout(t);
+      t = setTimeout(refreshList, 120);
+    });
+  }
+  bindImages();
+}
+
+/* ========== SWIPE ========== */
+let swipe = { x:0, y:0, on:false }, suppressClick = 0;
+document.addEventListener("touchstart", e => {
+  if (!e.target.closest(".preview-card")) return;
+  swipe = { x: e.touches[0].clientX, y: e.touches[0].clientY, on: true };
+}, { passive: true });
+document.addEventListener("touchend", e => {
+  if (!swipe.on) return;
+  swipe.on = false;
+  const dx = e.changedTouches[0].clientX - swipe.x;
+  const dy = e.changedTouches[0].clientY - swipe.y;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && state.skins.length){
+    suppressClick = Date.now() + 400;
+    state.previewIndex = (state.previewIndex + (dx < 0 ? 1 : -1) + state.skins.length) % state.skins.length;
+    patchHero();
+  }
+}, { passive: true });
+
+async function getDominantColor(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = 50;
+      canvas.height = 50;
+      ctx.drawImage(img, 0, 0, 50, 50);
+      const data = ctx.getImageData(0, 0, 50, 50).data;
+      const colorCounts = {};
+      let maxCount = 0;
+      let dominantColor = "#4f46e5";
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i+1], b = data[i+2];
+        if (r < 10 && g < 10 && b < 10) continue;
+        if (r > 245 && g > 245 && b > 245) continue;
+        const rgb = `${r},${g},${b}`;
+        colorCounts[rgb] = (colorCounts[rgb] || 0) + 1;
+        if (colorCounts[rgb] > maxCount) {
+          maxCount = colorCounts[rgb];
+          dominantColor = "#" + [r, g, b].map(x => x.toString(16).padStart(2, "0")).join("");
+        }
+      }
+      resolve(dominantColor);
+    };
+    img.onerror = () => reject(new Error("Gagal membaca gambar"));
+    img.src = url;
+  });
+}
+
+/* ========== ACTIONS ========== */
+async function handleAction(action, el){
+  switch(action){
+    case "open": {
+      state.editingId = el.dataset.id;
+      const skin = state.skins.find(s => s.id === state.editingId);
+      if (!skin) return;
+      editForm = {
+        id: skin.id, name: skin.name, anime: skin.anime, icon: skin.icon,
+        imageBlob: null, imageUrl: imageCache.get(skin.id) || null,
+        preview: skin.preview || "#4f46e5", desc: skin.desc || "",
+        _origSize: 0, _newSize: 0
+      };
+      navigate("detail");
+      break;
+    }
+    case "toggle-theme": {
+      let base = currentTheme.replace('-light', '');
+      if (base === 'light') base = 'dark';
+      const isLight = currentTheme === 'light' || currentTheme.endsWith('-light');
+      const nextTheme = isLight ? base : (base === 'dark' ? 'light' : base + '-light');
+      applyTheme(nextTheme);
+      render();
+      break;
+    }
+    case "set-theme": {
+      applyTheme(el.dataset.v);
+      render();
+      break;
+    }
+    case "back": case "go-home": navigate("home"); break;
+    case "go-add": {
+      editForm = { id:"", name:"", anime:"", icon:"", imageBlob:null, imageUrl:null, preview:"#4f46e5", desc:"", _origSize:0, _newSize:0 };
+      navigate("add"); break;
+    }
+    case "go-settings": navigate("settings"); break;
+
+    case "set-preview": state.previewIndex = parseInt(el.dataset.index, 10) || 0; patchHero(); break;
+    case "delete-skin": {
+      const id = el.dataset.id;
+      const skin = state.skins.find(s => s.id === id);
+      if (!skin) return;
+      const ok = await confirmDialog("Hapus skin?", `"${skin.name}" akan dihapus permanen.`);
+      if (!ok) return;
+      try { await dbDelete(id); } catch(e) { console.warn(e); }
+      cacheDelete(id);
+      state.skins = state.skins.filter(s => s.id !== id);
+      if (state.active === id) state.active = null;
+      if (state.previewIndex >= state.skins.length) state.previewIndex = Math.max(0, state.skins.length - 1);
+      saveState(); render(); toast("Skin dihapus", "success");
+      break;
+    }
+    case "delete-current": {
+      const skin = state.skins.find(s => s.id === state.editingId);
+      if (!skin) return;
+      const ok = await confirmDialog("Hapus skin?", `"${skin.name}" akan dihapus permanen.`);
+      if (!ok) return;
+      try { await dbDelete(skin.id); } catch(e) { console.warn(e); }
+      cacheDelete(skin.id);
+      state.skins = state.skins.filter(s => s.id !== state.editingId);
+      if (state.active === state.editingId) state.active = null;
+      if (state.previewIndex >= state.skins.length) state.previewIndex = Math.max(0, state.skins.length - 1);
+      saveState(); navigate("home"); toast("Skin dihapus", "success");
+      break;
+    }
+    case "pick-image": {
+      const choice = await new Promise(resolve => {
+        const ov = document.createElement("div");
+        ov.className = "modal-overlay";
+        ov.style.zIndex = "220";
+        ov.innerHTML = `<div class="modal">
+          <div class="modal-title">Pilih Sumber</div>
+          <div class="modal-msg">Pilih dari mana gambar akan diambil.</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <button class="btn btn-primary" data-choice="gallery" style="padding:13px;">📷 Galeri / Photos</button>
+            <button class="btn btn-secondary" data-choice="file" style="padding:13px;">📁 File Manager</button>
+            <button class="btn" data-choice="cancel" style="padding:13px;color:var(--muted);">Batal</button>
+          </div>
+        </div>`;
+        document.body.appendChild(ov);
+        requestAnimationFrame(() => ov.classList.add("show"));
+        const close = v => { ov.classList.remove("show"); setTimeout(() => ov.remove(), 200); resolve(v); };
+        ov.querySelector('[data-choice="gallery"]').onclick = () => close('gallery');
+        ov.querySelector('[data-choice="file"]').onclick = () => close('file');
+        ov.querySelector('[data-choice="cancel"]').onclick = () => close(null);
+        ov.onclick = e => { if (e.target === ov) close(null); };
+      });
+
+      if (!choice) break;
+
+      if (choice === "gallery") {
+        const inp = document.createElement("input");
+        inp.type = "file"; inp.accept = "image/*";
+        inp.onchange = () => { const f = inp.files && inp.files[0]; if (f) showPreviewModal(f); };
+        inp.click();
+      } else if (choice === "file") {
+        if (window.showOpenFilePicker) {
+          try {
+            const [fileHandle] = await window.showOpenFilePicker({
+              types: [{ description: 'Images', accept: { 'image/*': ['.jpg', '.jpeg', '.png', '.webp', '.gif'] } }],
+              excludeAcceptAllOption: true,
+              multiple: false
+            });
+            const file = await fileHandle.getFile();
+            if (file) showPreviewModal(file);
+          } catch (e) {
+            if (e.name !== 'AbortError') {
+              const inp = document.createElement("input");
+              inp.type = "file"; inp.accept = ".jpg,.jpeg,.png,.webp,.gif";
+              inp.onchange = () => { const f = inp.files && inp.files[0]; if (f) showPreviewModal(f); };
+              inp.click();
+            }
+          }
+        } else {
+          const inp = document.createElement("input");
+          inp.type = "file"; inp.accept = ".jpg,.jpeg,.png,.webp,.gif";
+          inp.onchange = () => { const f = inp.files && inp.files[0]; if (f) showPreviewModal(f); };
+          inp.click();
+        }
+      }
+      break;
+    }
+    case "rotate-image": {
+  const blob = editForm.imageBlob || (editForm.imageUrl ? await (await fetch(editForm.imageUrl)).blob() : null);
+  if (blob) showPreviewModal(blob);
+  break;
+}
+case "auto-color": {
+  if (!editForm.imageUrl) return toast("Gambar belum dipilih", "error");
+  try {
+    const color = await getDominantColor(editForm.imageUrl);
+    editForm.preview = color;
+    const colInp = document.getElementById("f-preview");
+    const hexInp = document.getElementById("f-preview-hex");
+    if (colInp) colInp.value = color;
+    if (hexInp) hexInp.value = color;
+    toast("Warna dominan diambil: " + color.toUpperCase(), "success");
+  } catch (e) {
+    toast("Gagal mengambil warna: " + e.message, "error");
+  }
+  break;
+}
+    case "save-edit": {
+      const skin = state.skins.find(s => s.id === state.editingId);
+      if (!skin) return;
+      const newId = editForm.id.trim(), name = editForm.name.trim();
+      if (!newId || !name) return toast("ID dan Name wajib diisi", "error");
+      if (state.skins.some(s => s.id === newId && s !== skin)) return toast("ID sudah dipakai", "error");
+      const oldId = skin.id;
+
+      try {
+        if (editForm.imageBlob){
+          await dbSave(newId, editForm.imageBlob);
+          if (oldId !== newId) await dbDelete(oldId);
+          cacheDelete(oldId); cacheSet(newId, editForm.imageBlob);
+        } else if (oldId !== newId && imageCache.has(oldId)){
+          const blob = await (await fetch(imageCache.get(oldId))).blob();
+          await dbSave(newId, blob); await dbDelete(oldId);
+          cacheDelete(oldId); cacheSet(newId, blob);
+        }
+      } catch(e) {
+        return toast("Gagal menyimpan gambar ke database", "error");
+      }
+      Object.assign(skin, {
+        id: newId, name,
+        anime: editForm.anime.trim() || "-",
+        icon: editForm.icon.trim() || "🎨",
+        preview: editForm.preview,
+        desc: editForm.desc.trim()
+      });
+      if (state.active === oldId) state.active = newId;
+      saveState(); toast("Perubahan disimpan", "success"); navigate("home");
+      break;
+    }
+    case "save-add": {
+      const id = editForm.id.trim(), name = editForm.name.trim();
+      if (!id || !name) return toast("ID dan Name wajib diisi", "error");
+      if (state.skins.some(s => s.id === id)) return toast("ID sudah dipakai", "error");
+      if (editForm.imageBlob){
+        try {
+          await dbSave(id, editForm.imageBlob);
+          cacheSet(id, editForm.imageBlob);
+        } catch(e) {
+          return toast("Gagal menyimpan gambar ke database", "error");
+        }
+      }
+      state.skins.push({
+        id, name, anime: editForm.anime.trim() || "-",
+        icon: editForm.icon.trim() || "🎨",
+        preview: editForm.preview, desc: editForm.desc.trim()
+      });
+      state.previewIndex = state.skins.length - 1;
+      saveState(); toast("Skin ditambahkan", "success"); navigate("home");
+      break;
+    }
+    case "fav": {
+      const s = state.skins.find(x => x.id === el.dataset.id);
+      if (!s) return;
+      s.fav = !s.fav;
+      saveState();
+      document.querySelectorAll(`[data-action="fav"][data-id="${CSS.escape(s.id)}"]`).forEach(b => {
+        b.classList.toggle("on", !!s.fav);
+        if (b.classList.contains("icon-btn")) b.style.color = s.fav ? "#fbbf24" : "";
+      });
+      if (state.filter === "fav" && !s.fav) refreshList();
+      toast(s.fav ? "Ditambahkan ke favorit" : "Dihapus dari favorit", "success");
+      break;
+    }
+
+    case "set-filter": {
+      state.filter = el.dataset.v === "fav" ? "fav" : "all";
+      document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c.dataset.v === state.filter));
+      refreshList(); break;
+    }
+    case "set-view": {
+      state.view = el.dataset.v === "list" ? "list" : "grid";
+      saveState();
+      const list = document.getElementById("skin-list");
+      if (list) list.className = "skin-grid " + state.view;
+      document.querySelectorAll(".seg button").forEach(b => b.classList.toggle("on", b.dataset.v === state.view));
+      break;
+    }
+    case "ai-autofill": {
+      const btn = el;
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner"></span> Menganalisis…`;
+      try {
+        let blob = editForm.imageBlob;
+        if (!blob && editForm.imageUrl) blob = await (await fetch(editForm.imageUrl)).blob();
+        if (!blob) throw new Error("Gambar belum dipilih");
+        const dataUrl = await blobToDataUrl(blob);
+        const text = await aiVision(dataUrl);
+        const j = parseAIJson(text);
+        if (j.id) editForm.id = slugify(j.id);
+        if (j.name) editForm.name = String(j.name);
+        if (j.anime) editForm.anime = String(j.anime);
+        if (j.icon) editForm.icon = String(j.icon);
+        if (j.preview && /^#[0-9a-fA-F]{6}$/.test(j.preview)) editForm.preview = j.preview;
+        if (j.desc) editForm.desc = String(j.desc).slice(0, 40);
+        const setV = (id, v) => { const e = document.getElementById(id); if (e) e.value = v; };
+        setV("f-id", editForm.id); setV("f-name", editForm.name);
+        setV("f-anime", editForm.anime); setV("f-icon", editForm.icon);
+        setV("f-preview", editForm.preview); setV("f-preview-hex", editForm.preview);
+        setV("f-desc", editForm.desc);
+        toast("✨ AI berhasil mengisi form", "success");
+      } catch(e) {
+        toast("AI gagal: " + e.message, "error");
+      } finally {
+        btn.disabled = false; btn.innerHTML = orig;
+      }
+      break;
+    }
+    case "toggle-key": {
+      const key = document.getElementById("s-key");
+      if (!key) return;
+      key.type = key.type === "password" ? "text" : "password";
+      el.textContent = key.type === "password" ? "Tampilkan" : "Sembunyikan";
+      break;
+    }
+    case "test-ai": {
+      const provider = document.getElementById("s-provider").value;
+      const model = document.getElementById("s-model").value.trim();
+      const apiKey = document.getElementById("s-key").value.trim();
+      const baseUrl = document.getElementById("s-base").value.trim();
+      if (!apiKey) return toast("Isi API key dulu", "error");
+      const st = document.getElementById("ai-status");
+      const dot = document.getElementById("ai-dot");
+      const txt = document.getElementById("ai-status-text");
+      st.style.display = "flex"; dot.className = "status-dot loading"; txt.textContent = "Menghubungkan…";
+      el.disabled = true; const orig = el.innerHTML;
+      el.innerHTML = `<span class="spinner"></span> Menguji…`;
+      const r = await testAI({ provider, model, apiKey, baseUrl });
+      el.disabled = false; el.innerHTML = orig;
+      if (r.ok){ dot.className = "status-dot success"; txt.textContent = `Terhubung • ${r.ping}ms`; toast(`Terhubung (${r.ping}ms)`, "success"); }
+      else { dot.className = "status-dot error"; txt.textContent = "Gagal: " + r.error; toast("Gagal: " + r.error, "error"); }
+      break;
+    }
+    case "save-settings": {
+      state.ai = {
+        provider: document.getElementById("s-provider").value,
+        model: document.getElementById("s-model").value.trim() || "gpt-4o-mini",
+        apiKey: document.getElementById("s-key").value.trim(),
+        baseUrl: document.getElementById("s-base").value.trim()
+      };
+      saveState(); toast("Pengaturan disimpan", "success");
+      break;
+    }
+    case "export-json": {
+      try { await ensureJSZip(); } catch(e) { toast("Gagal muat JSZip", "error"); return; }
+      toast("Menyiapkan ZIP...", "info");
+      const zip = new JSZip();
+      const folder = zip.folder("images");
+      const skinsOut = [];
+      for (const s of state.skins){
+        const copy = { ...s };
+        if (imageCache.has(s.id)){
+          const blob = await (await fetch(imageCache.get(s.id))).blob();
+          folder.file(`${s.id}.jpg`, blob);
+          copy.image = `./images/${s.id}.jpg`;
+        } else copy.image = null;
+        skinsOut.push(copy);
+      }
+      zip.file("skin.json", JSON.stringify({ version: "4.0", skins: skinsOut }, null, 2));
+      zip.generateAsync({ type: "blob" }).then(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "skin_export.zip";
+        document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(url);
+        toast("ZIP berhasil diunduh", "success");
+      }).catch(err => toast("Gagal: " + err.message, "error"));
+      break;
+    }
+    case "import-json": {
+      const inp = document.createElement("input");
+      inp.type = "file"; inp.accept = ".json,.zip,application/zip";
+      inp.onchange = async () => {
+        const f = inp.files && inp.files[0];
+        if (!f) return;
+        const isZip = f.name.endsWith(".zip");
+        if (isZip){
+          try { await ensureJSZip(); } catch(e) { toast("Gagal muat JSZip", "error"); return; }
+          const buf = await f.arrayBuffer();
+          try {
+            const zip = await JSZip.loadAsync(buf);
+            const jf = zip.file("skin.json");
+            if (!jf) throw new Error("skin.json tidak ditemukan");
+            const parsed = JSON.parse(await jf.async("string"));
+            const incoming = (Array.isArray(parsed.skins) ? parsed.skins : Array.isArray(parsed) ? parsed : []).filter(s => s && s.id && s.name);
+            if (!incoming.length) throw new Error("Tidak ada skin valid");
+            const ok = await confirmDialog("Import ZIP?", `${incoming.length} skin akan ditambahkan.`, "Import");
+            if (!ok) return;
+            const map = new Map(state.skins.map(s => [s.id, s]));
+            for (const raw of incoming){
+              const s = {
+                id: String(raw.id),
+                name: String(raw.name),
+                anime: raw.anime ? String(raw.anime) : "-",
+                icon: raw.icon ? String(raw.icon) : "🎨",
+                preview: /^#[0-9a-fA-F]{6}$/.test(raw.preview) ? raw.preview : "#4f46e5",
+                desc: raw.desc ? String(raw.desc) : ""
+              };
+              if (raw.image && raw.image.startsWith("./images/")){
+                const imgFile = zip.file("images/" + raw.image.replace("./images/", ""));
+                if (imgFile){
+                  const blob = await imgFile.async("blob");
+                  try { await dbSave(s.id, blob); } catch(e) { console.warn(e); }
+                  cacheSet(s.id, blob);
+                }
+              }
+              map.set(s.id, s);
+            }
+            state.skins = Array.from(map.values());
+            saveState(); render();
+            toast(`${incoming.length} skin diimport`, "success");
+          } catch(e) { toast("Import ZIP gagal: " + e.message, "error"); }
+        } else {
+          const text = await f.text();
+          try {
+            const parsed = JSON.parse(text);
+            const incoming = (Array.isArray(parsed.skins) ? parsed.skins : Array.isArray(parsed) ? parsed : []).filter(s => s && s.id && s.name);
+            if (!incoming.length) throw new Error("Tidak ada skin valid");
+            const ok = await confirmDialog("Import JSON?", `${incoming.length} skin akan ditambahkan.`, "Import");
+            if (!ok) return;
+            const map = new Map(state.skins.map(s => [s.id, s]));
+            for (const raw of incoming){
+              const s = {
+                id: String(raw.id),
+                name: String(raw.name),
+                anime: raw.anime ? String(raw.anime) : "-",
+                icon: raw.icon ? String(raw.icon) : "🎨",
+                preview: /^#[0-9a-fA-F]{6}$/.test(raw.preview) ? raw.preview : "#4f46e5",
+                desc: raw.desc ? String(raw.desc) : ""
+              };
+              if (raw.image && raw.image.startsWith("data:image/")){
+                try { 
+                  const blob = await (await fetch(raw.image)).blob(); 
+                  await dbSave(s.id, blob); 
+                  cacheSet(s.id, blob); 
+                } catch(e){}
+              }
+              map.set(s.id, s);
+            }
+            state.skins = Array.from(map.values());
+            saveState(); render();
+            toast(`${incoming.length} skin diimport`, "success");
+          } catch(e) { toast("Import gagal: " + e.message, "error"); }
+        }
+      };
+      inp.click();
+      break;
+    }
+  }
+}
+
+function navigate(route, id){
+  state.route = route;
+  if (id !== undefined) state.editingId = id;
+  render();
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+/* ========== EVENT DELEGATION ========== */
+document.addEventListener('contextmenu', e => {
+  const tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+  e.preventDefault();
+});
+
+document.getElementById("app").addEventListener("click", e => {
+  const t = e.target.closest("[data-action]");
+  if (!t) return;
+  if (Date.now() < suppressClick) return;
+  e.stopPropagation();
+  handleAction(t.dataset.action, t).catch(err => {
+    console.error(err);
+    toast("Error: " + err.message, "error");
+  });
+});
+
+/* ========== BOOT ========== */
+async function boot(){
+  applyTheme(currentTheme);
+  const isFirstRun = !localStorage.getItem(STORAGE_KEY);
+  loadState();
+  if (isFirstRun) saveState();
+  await dbLoadAll();
+  render();
+  if (isFirstRun){
+    // Migrate default images in background (only once, non-blocking)
+    const defaults = DEFAULT_SKINS.filter(s => s.image);
+    Promise.all(defaults.map(async s => {
+      try {
+        if (imageCache.has(s.id)) return;
+        const r = await fetch(s.image, { cache: "force-cache" });
+        if (!r.ok) return;
+        const blob = await r.blob();
+        await dbSave(s.id, blob);
+        cacheSet(s.id, blob);
+      } catch(e){}
+    })).then(() => { if (state.route === "home") render(); });
+  }
+}
+boot();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.log('Service Worker Failed', err));
+  });
+}
+</script>
+</body>
+</html>
