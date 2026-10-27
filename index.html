@@ -367,6 +367,7 @@ function applyTheme(theme) {
 }
 
 let state = {
+  updatedAt: 0,
   skins: [],
   ai: { provider:"openai", model:"gpt-4o-mini", apiKey:"", baseUrl:"" },
   route: "home",
@@ -445,6 +446,7 @@ function loadState() {
       if (Array.isArray(p.skins) && p.skins.length) state.skins = p.skins;
       if (p.ai) state.ai = { ...state.ai, ...p.ai };
       if (p.ui && p.ui.view) state.view = p.ui.view;
+  if (p.updatedAt) state.updatedAt = p.updatedAt;
     }
   } catch(e) { console.warn("load", e); }
   if (!state.skins.length) {
@@ -452,8 +454,9 @@ function loadState() {
   }
 }
 function saveState() {
+  state.updatedAt = Date.now();
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ skins: state.skins, ai: state.ai, ui: { view: state.view } }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ skins: state.skins, ai: state.ai, ui: { view: state.view }, updatedAt: state.updatedAt }));
   } catch(e) { toast("Storage penuh", "error"); }
 }
 
@@ -1609,12 +1612,19 @@ async function syncCloudUp() {
       console.error("Gagal upload skin", s.id, e);
     }
   }
+  
+  try {
+    await dbCloud.collection("system").doc("meta").set({ updatedAt: Date.now() });
+    state.updatedAt = Date.now();
+    saveState();
+  } catch(e) { console.warn("Gagal update meta", e); }
+
   toast(`✓ ${success} skin berhasil di-upload ke Cloud`, "success");
 }
 
-async function syncCloudDown() {
-  if (!confirm("Tarik data dari Cloud? Data lokal dengan ID yang sama akan ditimpa.")) return;
-  toast("Menarik data dari Firebase...", "info");
+async function syncCloudDown(isSilent = false) {
+  if (!isSilent && !confirm("Tarik data dari Cloud? Data lokal dengan ID yang sama akan ditimpa.")) return;
+  if (!isSilent) toast("Menarik data dari Firebase...", "info");
   
   try {
     const snapshot = await dbCloud.collection("skins").get();
@@ -1650,12 +1660,21 @@ async function syncCloudDown() {
       count++;
     }
     
+    try {
+      const metaDoc = await dbCloud.collection("system").doc("meta").get();
+      if (metaDoc.exists) {
+        state.updatedAt = metaDoc.data().updatedAt || Date.now();
+      } else {
+        state.updatedAt = Date.now();
+      }
+    } catch(e) { state.updatedAt = Date.now(); }
+
     saveState();
     render();
-    toast(`✓ ${count} skin berhasil ditarik dari Cloud`, "success");
+    if (!isSilent) toast(`✓ ${count} skin berhasil ditarik dari Cloud`, "success");
   } catch(e) {
     console.error(e);
-    toast("Gagal menarik data: " + e.message, "error");
+    if (!isSilent) toast("Gagal menarik data: " + e.message, "error");
   }
 }
 
@@ -1712,6 +1731,27 @@ document.getElementById("app").addEventListener("click", e => {
 });
 
 /* ========== BOOT ========== */
+async function checkSmartSync() {
+  try {
+    const metaDoc = await dbCloud.collection("system").doc("meta").get();
+    if (!metaDoc.exists) return; 
+    
+    const cloudUpdatedAt = metaDoc.data().updatedAt || 0;
+    const localUpdatedAt = state.updatedAt || 0;
+
+    if (cloudUpdatedAt > localUpdatedAt + 3000) {
+      toast("🔄 Memuat skin terbaru dari Cloud...", "info");
+      await syncCloudDown(true);
+    } else if (localUpdatedAt > cloudUpdatedAt + 3000) {
+      setTimeout(() => {
+        toast("⚠️ Data di HP ini lebih baru. Jangan lupa Upload ke Cloud!", "warning");
+      }, 2000);
+    }
+  } catch(e) {
+    console.warn("Auto-sync check gagal (mungkin offline)", e);
+  }
+}
+
 async function boot(){
   applyTheme(currentTheme);
   history.replaceState({ route: "home" }, "");
@@ -1734,6 +1774,8 @@ async function boot(){
       } catch(e){}
     })).then(() => { if (state.route === "home") render(); });
   }
+  
+  setTimeout(checkSmartSync, 1500);
 }
 boot();
 
