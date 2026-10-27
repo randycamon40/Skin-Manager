@@ -765,7 +765,7 @@ function skinListHtml(){
       <div class="sc-tools">
         <button class="sc-btn ${s.fav ? "on" : ""}" data-action="fav" data-id="${id}">${ic("star",15)}</button>
         
-        <button class="del" data-action="delete-skin" data-id="${id}">${ic("trash",15)}</button>
+        <button class="del" data-action="delete-skin" data-id="${id}" style="${id === 'none' ? 'display:none;' : ''}">${ic("trash",15)}</button>
       </div></div>`;
   }).join("");
 }
@@ -947,7 +947,7 @@ function renderDetail(){
     <button class="icon-btn" data-action="back">${ic("back",20)}</button>
     <div style="text-align:center;flex:1;"><div class="topbar-title" style="font-size:15px;">Edit Skin</div>
       <div class="topbar-sub">${escapeHtml(skin.id)}</div></div>
-    <button class="icon-btn danger" data-action="delete-current">${ic("trash",18)}</button></div>
+    ${skin.id === 'none' ? '<div style="width:40px;"></div>' : `<button class="icon-btn danger" data-action="delete-current">${ic("trash",18)}</button>`}</div>
   <div class="screen">
     ${renderImageBox()}${renderFormFields()}
     <div class="btn-group">
@@ -1206,6 +1206,7 @@ async function handleAction(action, el){
 }
     case "delete-skin": {
       const id = el.dataset.id;
+      if (id === 'none') return toast("Skin 'Tanpa Skin' tidak bisa dihapus", "error");
       const skin = state.skins.find(s => s.id === id);
       if (!skin) return;
       const ok = await confirmDialog("Hapus skin?", `"${skin.name}" akan dihapus permanen.`);
@@ -1220,6 +1221,7 @@ async function handleAction(action, el){
       break;
     }
     case "delete-current": {
+      if (state.editingId === 'none') return toast("Skin 'Tanpa Skin' tidak bisa dihapus", "error");
       const skin = state.skins.find(s => s.id === state.editingId);
       if (!skin) return;
       const ok = await confirmDialog("Hapus skin?", `"${skin.name}" akan dihapus permanen.`);
